@@ -54,3 +54,14 @@
     display: flex;
     flex-wrap: wrap;
  }
+
+ .room-card .card {
+    transition: transform 0.3s;
+}
+.room-card .card:hover {
+    transform: translateY(-5px);
+}
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}

@@ -28,7 +28,7 @@ if (!isLoggedIn()) {
                     <li><a href="#beranda">Beranda</a></li>
                     <li><a href="#lokasi">Lokasi</a></li>
                     <li><a href="#tentang">Tentang</a></li>
-                    <li><a href="Rooms.php">Kamar</a></li>
+                    <li><a href="#kamar">Kamar</a></li>
                     <li><a href="#ulasan">Ulasan</a></li>
                     <li><a href="Logout.php">Logout</a></li>
                 </ul>
@@ -119,6 +119,72 @@ if (!isLoggedIn()) {
                     </div>
                 </div>
             </section>
+            
+            <section id="rooms" class="my-5">
+                <div class="container">
+                    <!-- Search and Filter -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <!-- Search -->
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" id="searchRoom" placeholder="Cari kamar...">
+                                </div>
+                                <!-- Filters -->
+                                <div class="col-md-3">
+                                    <select class="form-select" id="priceSort">
+                                        <option value="">Urutkan Harga</option>
+                                        <option value="low">Termurah</option>
+                                        <option value="high">Termahal</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-select" id="availabilityFilter">
+                                        <option value="">Status Kamar</option>
+                                        <option value="available">Tersedia</option>
+                                        <option value="occupied">Terisi</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rooms Grid -->
+                    <div class="row" id="roomsContainer">
+                        <?php
+                        $query = "SELECT r.*, rt.price_monthly, rt.facilities 
+                                FROM rooms r 
+                                JOIN room_types rt ON r.type_id = rt.type_id";
+                        $stmt = $pdo->query($query);
+                        while($room = $stmt->fetch()) {
+                        ?>
+                        <div class="col-md-4 mb-4 room-card" 
+                                data-price="<?php echo $room['price_monthly']; ?>"
+                                data-status="<?php echo $room['status']; ?>">
+                            <div class="card h-100">
+                                <img src="../uploads/rooms/<?php echo $room['room_photo'] ?? 'default.jpg'; ?>" 
+                                        class="card-img-top" alt="Room Image">
+                                <div class="card-body">
+                                    <h5 class="card-title">Kamar <?php echo $room['room_number']; ?></h5>
+                                    <p class="card-text">
+                                        <strong>Harga:</strong> Rp <?php echo number_format($room['price_monthly']); ?>/bulan<br>
+                                        <strong>Status:</strong> <?php echo $room['status'] == 'available' ? 
+                                            '<span class="text-success">Tersedia</span>' : 
+                                            '<span class="text-danger">Terisi</span>'; ?>
+                                    </p>
+                                    <p class="card-text small"><?php echo $room['facilities']; ?></p>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-primary w-100" <?php echo $room['status'] != 'available' ? 'disabled' : ''; ?>>
+                                        Pesan Kamar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <?php } ?>
+                    </div>
+                </div>
+            </section>
 
             <section id="ulasan">
                 <div class="review-section">
@@ -176,5 +242,42 @@ if (!isLoggedIn()) {
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchRoom');
+            const priceSort = document.getElementById('priceSort');
+            const availabilityFilter = document.getElementById('availabilityFilter');
+            const roomsContainer = document.getElementById('roomsContainer');
+
+            function filterRooms() {
+                const searchText = searchInput.value.toLowerCase();
+                const sortValue = priceSort.value;
+                const statusFilter = availabilityFilter.value;
+                
+                let rooms = Array.from(document.querySelectorAll('.room-card'));
+                
+                rooms.forEach(room => {
+                    const title = room.querySelector('.card-title').textContent.toLowerCase();
+                    const status = room.dataset.status;
+                    const matches = title.includes(searchText) && 
+                                    (!statusFilter || status === statusFilter);
+                    room.style.display = matches ? '' : 'none';
+                });
+
+                if(sortValue) {
+                    rooms.sort((a, b) => {
+                        const priceA = parseFloat(a.dataset.price);
+                        const priceB = parseFloat(b.dataset.price);
+                        return sortValue === 'low' ? priceA - priceB : priceB - priceA;
+                    });
+                    rooms.forEach(room => roomsContainer.appendChild(room));
+                }
+            }
+
+            searchInput.addEventListener('input', filterRooms);
+            priceSort.addEventListener('change', filterRooms);
+            availabilityFilter.addEventListener('change', filterRooms);
+        });
+   </script>
 </body>
 </html>
