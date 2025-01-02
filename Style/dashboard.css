@@ -41,8 +41,8 @@ header {
 }
 
 .site-logo {
-    width: 80px;  /* Sesuaikan dengan ukuran yang diinginkan */
-    height: 80px;
+    width: 40px;  /* Sesuaikan dengan ukuran yang diinginkan */
+    height: 40px;
     object-fit: contain;
 }
 
