@@ -6,7 +6,7 @@
         </a>
         
         <div class="ms-auto">
-            <a href="admin_logout.php" class="btn btn-danger rounded-pill px-4">
+            <a href="Admin_logout.php" class="btn btn-danger rounded-pill px-4">
                 Logout <i class="bi bi-box-arrow-right ms-1"></i>
             </a>
         </div>
