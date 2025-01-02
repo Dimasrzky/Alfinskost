@@ -1,7 +1,7 @@
 <header class="navbar navbar-dark bg-dark navbar-expand-lg">
     <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center" href="Admin_Dashboard.php">
-            <img src="../Image/Logo Alfins Kost.png" alt="Logo" width="30" height="30" class="d-inline-block me-2">
+            <img src="../Image/Logo Alfins Kost.png" alt="Logo" width="45" height="45" class="d-inline-block me-2">
             <span>Alfins Kost - Admin</span>
         </a>
         
