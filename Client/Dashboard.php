@@ -153,36 +153,52 @@ if (!isLoggedIn()) {
                     <!-- Rooms Grid -->
                     <div class="row" id="roomsContainer">
                         <?php
-                        $query = "SELECT r.*, rt.price_monthly, rt.facilities 
-                                FROM rooms r 
-                                JOIN room_types rt ON r.type_id = rt.type_id";
-                        $stmt = $pdo->query($query);
-                        while($room = $stmt->fetch()) {
-                        ?>
-                        <div class="col-md-4 mb-4 room-card" 
+                            try {
+                            $query = "SELECT r.*, rt.type_name, rt.price_monthly, rt.facilities 
+                                        FROM rooms r 
+                                        JOIN room_types rt ON r.type_id = rt.type_id 
+                                        ORDER BY rt.price_monthly ASC";
+                            $stmt = $pdo->query($query);
+                            
+                            while($room = $stmt->fetch()) {
+                                $statusClass = $room['status'] === 'available' ? 'success' : 'danger';
+                                $statusText = $room['status'] === 'available' ? 'Tersedia' : 'Terisi';
+                            ?>
+                            <div class="col-md-4 mb-4 room-card" 
                                 data-price="<?php echo $room['price_monthly']; ?>"
                                 data-status="<?php echo $room['status']; ?>">
                             <div class="card h-100">
-                                <img src="../uploads/rooms/<?php echo $room['room_photo'] ?? 'default.jpg'; ?>" 
-                                        class="card-img-top" alt="Room Image">
+                                <img src="../Image/kamar.jpg" class="card-img-top" alt="Room Image">
                                 <div class="card-body">
-                                    <h5 class="card-title">Kamar <?php echo $room['room_number']; ?></h5>
-                                    <p class="card-text">
-                                        <strong>Harga:</strong> Rp <?php echo number_format($room['price_monthly']); ?>/bulan<br>
-                                        <strong>Status:</strong> <?php echo $room['status'] == 'available' ? 
-                                            '<span class="text-success">Tersedia</span>' : 
-                                            '<span class="text-danger">Terisi</span>'; ?>
+                                    <h5 class="card-title">Kamar <?php echo htmlspecialchars($room['room_number']); ?></h5>
+                                    <p class="room-price mb-2">
+                                        Rp <?php echo number_format($room['price_monthly'], 0, ',', '.'); ?>/bulan
                                     </p>
-                                    <p class="card-text small"><?php echo $room['facilities']; ?></p>
-                                </div>
-                                <div class="card-footer">
-                                    <button class="btn btn-primary w-100" <?php echo $room['status'] != 'available' ? 'disabled' : ''; ?>>
-                                        Pesan Kamar
-                                    </button>
+                                    <p class="text-<?php echo $statusClass; ?> mb-2">
+                                        <strong>Status:</strong> <?php echo $statusText; ?>
+                                    </p>
+                                    <p class="facilities mb-3">
+                                        <?php echo htmlspecialchars($room['facilities']); ?>
+                                    </p>
+                                    <?php if($room['status'] === 'available'): ?>
+                                        <button onclick="bookRoom(<?php echo $room['room_id']; ?>)" 
+                                                class="btn btn-primary w-100">
+                                            Pesan Kamar
+                                        </button>
+                                    <?php else: ?>
+                                        <button class="btn btn-secondary w-100" disabled>
+                                            Tidak Tersedia
+                                        </button>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
-                        <?php } ?>
+                        <?php
+                            }
+                        } catch(PDOException $e) {
+                        echo "<div class='alert alert-danger'>Error: " . $e->getMessage() . "</div>";
+                        }
+                        ?>
                     </div>
                 </div>
             </section>
