@@ -2,30 +2,16 @@
 <header class="navbar navbar-dark bg-dark navbar-expand-lg">
     <div class="container">
         <a class="navbar-brand" href="Admin_Dashboard.php">
-            <img src="../assets/images/logo.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
+            <img src="../Image/Logo Alfins Kost.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
             Alfins Kost - Admin
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="adminNav">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="Admin_Dashboard.php">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="add_room.php">Tambah Kamar</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="manage_bookings.php">Kelola Pemesanan</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="manage_users.php">Kelola Penghuni</a>
-                </li>
-            </ul>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="admin_logout.php">Logout</a>
+                    <a class="nav-link" href="Admin_logout.php">Logout</a>
                 </li>
             </ul>
         </div>
