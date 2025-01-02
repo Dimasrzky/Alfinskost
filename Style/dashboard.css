@@ -61,6 +61,7 @@ nav ul {
     list-style: none;
     display: flex;
     justify-content: flex-end;
+    margin-top: 20px;
 }
 
 nav ul li {
@@ -75,7 +76,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    color: #3498db;
+    color: #59581d;
 }
 
 /* Modifikasi style untuk profile-image di dashboard.css */
