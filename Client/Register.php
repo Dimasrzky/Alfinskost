@@ -42,6 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <title>Register - Kost Booking</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Style/Register.css" rel="stylesheet">
 </head>
 <body class="bg-light">
     <div class="container">
@@ -112,8 +113,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
                             
                             <div class="mb-3">
-                                <label>Foto Profil:</label>
-                                <input type="file" name="profile_photo" class="form-control" accept="image/*">
+                            <label>Foto Profil:</label>
+                            <input type="file" name="profile_photo" id="profilePhoto" class="form-control" accept="image/*" onchange="previewImage(this);">
+                            <div id="imagePreview" style="margin-top: 10px; display: none;">
+                                <img id="preview" style="max-width: 200px; max-height: 200px; border-radius: 8px;">
+                            </div>
                             </div>
                             
                             <div class="d-grid">
@@ -128,4 +132,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 </body>
+<script>
+function previewImage(input) {
+    var preview = document.getElementById('preview');
+    var previewDiv = document.getElementById('imagePreview');
+    
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            previewDiv.style.display = 'block';
+        }
+        
+        reader.readAsDataURL(input.files[0]);
+    } else {
+        preview.src = '';
+        previewDiv.style.display = 'none';
+    }
+}
+</script>
 </html>

@@ -1,0 +1,14 @@
+#imagePreview {
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+#preview {
+    border: 2px solid #ddd;
+    padding: 3px;
+    transition: transform 0.3s ease;
+}
+
+#preview:hover {
+    transform: scale(1.05);
+}
