@@ -28,6 +28,7 @@ if (!isLoggedIn()) {
                     <li><a href="#beranda">Beranda</a></li>
                     <li><a href="#lokasi">Lokasi</a></li>
                     <li><a href="#tentang">Tentang</a></li>
+                    <li><a href="Rooms.php">Kamar</a></li>
                     <li><a href="#ulasan">Ulasan</a></li>
                     <li><a href="Logout.php">Logout</a></li>
                 </ul>
