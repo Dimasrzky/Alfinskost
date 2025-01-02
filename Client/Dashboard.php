@@ -120,7 +120,7 @@ if (!isLoggedIn()) {
                 </div>
             </section>
             
-            <section id="rooms" class="my-5">
+            <section id="kamar" class="my-5">
                 <div class="container">
                     <!-- Search and Filter -->
                     <div class="card mb-4">
