@@ -28,6 +28,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
+
+if ($user && password_verify($password, $user['password'])) {
+    $_SESSION['user_id'] = $user['user_id'];
+    $_SESSION['full_name'] = $user['full_name'];
+    
+    // Catat login history
+    $stmt = $pdo->prepare("INSERT INTO login_history (user_id, ip_address, user_agent) VALUES (?, ?, ?)");
+    $stmt->execute([
+        $user['user_id'],
+        $_SERVER['REMOTE_ADDR'],
+        $_SERVER['HTTP_USER_AGENT']
+    ]);
+    
+    header("Location: Dashboard.php");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>

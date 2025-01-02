@@ -7,11 +7,34 @@ if (!isset($_SESSION['admin_id'])) {
     exit;
 }
 
-// Tidak perlu koneksi database karena belum ada tabel
-$totalRooms = 0;
-$availableRooms = 0;
-$totalUsers = 2;
-$pendingBookings = 0;
+require_once '../Config/db_connect.php';
+
+// Mengambil statistik
+try {
+    // Total pengunjung yang login
+    $stmt = $pdo->query("SELECT COUNT(DISTINCT user_id) as total_visitors FROM login_history");
+    $totalVisitors = $stmt->fetch()['total_visitors'];
+
+    // Pengunjung hari ini
+    $stmt = $pdo->query("SELECT COUNT(DISTINCT user_id) as today_visitors FROM login_history 
+                         WHERE DATE(login_time) = CURDATE()");
+    $todayVisitors = $stmt->fetch()['today_visitors'];
+
+    // Menghitung statistik lainnya seperti sebelumnya
+    $stmt = $pdo->query("SELECT COUNT(*) as total FROM rooms");
+    $totalRooms = $stmt->fetch()['total'];
+    
+    $stmt = $pdo->query("SELECT COUNT(*) as available FROM rooms WHERE status = 'available'");
+    $availableRooms = $stmt->fetch()['available'];
+    
+    $stmt = $pdo->query("SELECT COUNT(*) as total FROM users WHERE status = 'active'");
+    $totalUsers = $stmt->fetch()['total'];
+    
+    $stmt = $pdo->query("SELECT COUNT(*) as pending FROM bookings WHERE booking_status = 'pending'");
+    $pendingBookings = $stmt->fetch()['pending'];
+} catch(PDOException $e) {
+    echo "Error: " . $e->getMessage();
+}
 ?>
 
 <!DOCTYPE html>
@@ -44,6 +67,20 @@ $pendingBookings = 0;
 
         <!-- Statistics Cards -->
         <div class="row">
+            <div class="col-md-6">
+                <div class="stat-card bg-purple text-white">
+                    <i class="bi bi-eye stat-icon"></i>
+                    <div class="stat-value"><?php echo $totalVisitors; ?></div>
+                    <div class="stat-label">Total Pengunjung</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="stat-card bg-orange text-white">
+                    <i class="bi bi-person-check stat-icon"></i>
+                    <div class="stat-value"><?php echo $todayVisitors; ?></div>
+                    <div class="stat-label">Pengunjung Hari Ini</div>
+                </div>
+            </div>
             <div class="col-md-3">
                 <div class="stat-card bg-primary text-white">
                     <i class="bi bi-house-door stat-icon"></i>
