@@ -154,10 +154,10 @@ if (!isLoggedIn()) {
                     <div class="row" id="roomsContainer">
                         <?php
                             try {
-                            $query = "SELECT r.*, rt.type_name, rt.price_monthly, rt.facilities 
-                                        FROM rooms r 
-                                        JOIN room_types rt ON r.type_id = rt.type_id 
-                                        ORDER BY rt.price_monthly ASC";
+                            $query = "SELECT r.*, rt.type_name, rt.price_monthly, rt.facilities, rp.photo_url 
+                                FROM rooms r 
+                                JOIN room_types rt ON r.type_id = rt.type_id 
+                                LEFT JOIN room_photos rp ON r.room_id = rp.room_id AND rp.is_primary = 1";
                             $stmt = $pdo->query($query);
                             
                             while($room = $stmt->fetch()) {
@@ -168,7 +168,8 @@ if (!isLoggedIn()) {
                                 data-price="<?php echo $room['price_monthly']; ?>"
                                 data-status="<?php echo $room['status']; ?>">
                             <div class="card h-100">
-                                <img src="../Image/kamar.jpg" class="card-img-top" alt="Room Image">
+                            <img src="../<?php echo $room['photo_url'] ?? 'uploads/rooms/default.jpg'; ?>" 
+                                class="card-img-top" alt="Foto Kamar <?php echo $room['room_number']; ?>">
                                 <div class="card-body">
                                     <h5 class="card-title">Kamar <?php echo htmlspecialchars($room['room_number']); ?></h5>
                                     <p class="room-price mb-2">
