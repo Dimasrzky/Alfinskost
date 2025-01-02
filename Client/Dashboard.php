@@ -179,7 +179,7 @@ if (!isLoggedIn()) {
                                         <strong>Status:</strong> <?php echo $statusText; ?>
                                     </p>
                                     <p class="facilities mb-3">
-                                        <?php echo htmlspecialchars($room['facilities']); ?>
+                                        <strong>Fasilitas:</strong> <?php echo htmlspecialchars($room['facilities']); ?>
                                     </p>
                                     <?php if($room['status'] === 'available'): ?>
                                         <button onclick="bookRoom(<?php echo $room['room_id']; ?>)" 
