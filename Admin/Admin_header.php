@@ -1,17 +1,42 @@
-<!-- admin_header.php -->
 <header class="navbar navbar-dark bg-dark navbar-expand-lg">
-    <div class="container">
-        <a class="navbar-brand" href="Admin_Dashboard.php">
-            <img src="../Image/Logo Alfins Kost.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
-            Alfins Kost - Admin
+    <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center" href="Admin_Dashboard.php">
+            <img src="../assets/images/logo.png" alt="Logo" width="30" height="30" class="d-inline-block me-2">
+            <span>Alfins Kost - Admin</span>
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="ms-auto"> <!-- ms-auto untuk push ke kanan -->
-            <a href="Admin_logout.php" class="btn btn-danger rounded-pill px-4">
+        
+        <div class="ms-auto">
+            <a href="admin_logout.php" class="btn btn-danger rounded-pill px-4">
                 Logout <i class="bi bi-box-arrow-right ms-1"></i>
             </a>
         </div>
     </div>
 </header>
+
+<style>
+    .navbar {
+        padding: 15px 30px;  /* Menambah padding atas-bawah dan kiri-kanan */
+    }
+    
+    .navbar-brand {
+        font-size: 1.3rem;  /* Memperbesar ukuran font */
+        padding: 8px 0;     /* Menambah padding atas-bawah */
+    }
+    
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        transition: all 0.3s ease;
+        padding: 8px 25px;  /* Menyesuaikan padding button */
+    }
+    
+    .btn-danger:hover {
+        background-color: #bb2d3b;
+        border-color: #bb2d3b;
+        transform: translateY(-2px);
+    }
+
+    .container-fluid {
+        padding: 0 25px;   /* Menambah padding container */
+    }
+</style>
