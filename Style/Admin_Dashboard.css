@@ -47,13 +47,10 @@
 /* Tambahkan style untuk spacing tombol */
 .btn {
     margin-right: 15px;  /* Jarak antar tombol */
-    margin-bottom: 15px; /* Jarak ke bawah */
-    padding: 8px 20px;   /* Padding dalam tombol */
  }
  
  /* Gunakan flexbox untuk container tombol */
  .mb-4 {
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
  }
