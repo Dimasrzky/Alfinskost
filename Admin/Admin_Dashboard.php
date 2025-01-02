@@ -57,6 +57,9 @@ try {
             <a href="Add_room.php" class="btn btn-primary">
                 <i class="bi bi-plus-circle"></i> Tambah Kamar
             </a>
+            <a href="manage_rooms.php" class="btn btn-info text-white">
+                <i class="bi bi-room"></i> Kelola Kamar
+            </a>
             <a href="manage_bookings.php" class="btn btn-success">
                 <i class="bi bi-calendar-check"></i> Kelola Pemesanan
             </a>
