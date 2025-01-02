@@ -8,12 +8,10 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="adminNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="Admin_logout.php">Logout</a>
-                </li>
-            </ul>
+        <div class="ms-auto"> <!-- ms-auto untuk push ke kanan -->
+            <a href="Admin_logout.php" class="btn btn-danger rounded-pill px-4">
+                Logout <i class="bi bi-box-arrow-right ms-1"></i>
+            </a>
         </div>
     </div>
 </header>
