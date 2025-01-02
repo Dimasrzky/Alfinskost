@@ -16,6 +16,9 @@ $room = $pdo->query("SELECT r.*, rt.* FROM rooms r
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     try {
+        $price_monthly = $_POST['price'];
+        $price_yearly = $price_monthly * 12; // Calculate yearly price
+
         $stmt = $pdo->prepare("UPDATE rooms SET room_number = ?, floor = ?, status = ? WHERE room_id = ?");
         $stmt->execute([
             $_POST['room_number'],
@@ -24,9 +27,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $room_id
         ]);
 
-        $stmt = $pdo->prepare("UPDATE room_types SET price_monthly = ?, facilities = ? WHERE type_id = ?");
+        $stmt = $pdo->prepare("UPDATE room_types SET price_monthly = ?, price_yearly = ?, facilities = ? WHERE type_id = ?");
         $stmt->execute([
-            $_POST['price'],
+            $price_monthly,
+            $price_yearly,
             $_POST['facilities'], 
             $room['type_id']
         ]);
