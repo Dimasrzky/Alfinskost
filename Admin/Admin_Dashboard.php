@@ -1,13 +1,13 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+require_once '../Config/db_connect.php';
 
-// Cek jika user bukan admin
 if (!isset($_SESSION['admin_id'])) {
     header("Location: Admin_login.php");
     exit;
 }
-
-require_once '../Config/db_connect.php';
 
 // Mengambil statistik
 try {
