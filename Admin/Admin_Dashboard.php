@@ -1,5 +1,4 @@
 <?php
-require_once '../Config/db_connect.php';
 session_start();
 
 // Cek jika user bukan admin
@@ -8,35 +7,11 @@ if (!isset($_SESSION['admin_id'])) {
     exit;
 }
 
-// Mengambil statistik untuk dashboard
-try {
-    // Total kamar
-    $stmt = $pdo->query("SELECT COUNT(*) as total FROM rooms");
-    $totalRooms = $stmt->fetch()['total'];
-
-    // Kamar tersedia
-    $stmt = $pdo->query("SELECT COUNT(*) as available FROM rooms WHERE status = 'available'");
-    $availableRooms = $stmt->fetch()['available'];
-
-    // Total penghuni
-    $stmt = $pdo->query("SELECT COUNT(*) as total FROM users WHERE status = 'active'");
-    $totalUsers = $stmt->fetch()['total'];
-
-    // Pemesanan baru (pending)
-    $stmt = $pdo->query("SELECT COUNT(*) as pending FROM bookings WHERE booking_status = 'pending'");
-    $pendingBookings = $stmt->fetch()['pending'];
-
-    // Pemesanan terbaru
-    $stmt = $pdo->query("SELECT b.*, u.full_name, r.room_number 
-                        FROM bookings b 
-                        JOIN users u ON b.user_id = u.user_id 
-                        JOIN rooms r ON b.room_id = r.room_id 
-                        ORDER BY b.booking_date DESC LIMIT 5");
-    $recentBookings = $stmt->fetchAll();
-
-} catch(PDOException $e) {
-    echo "Error: " . $e->getMessage();
-}
+// Tidak perlu koneksi database karena belum ada tabel
+$totalRooms = 0;
+$availableRooms = 0;
+$totalUsers = 2;
+$pendingBookings = 0;
 ?>
 
 <!DOCTYPE html>
@@ -72,38 +47,26 @@ try {
             color: #6c757d;
             font-size: 0.9rem;
         }
-        .quick-actions {
-            margin: 20px 0;
-        }
-        .action-button {
-            padding: 10px 20px;
-            margin: 5px;
-        }
     </style>
 </head>
 <body class="bg-light">
-    <?php include 'admin_header.php'; ?>
+    <?php include 'Admin_header.php'; ?>
 
     <div class="container mt-4">
-        <!-- Welcome Section -->
-        <div class="row mb-4">
-            <div class="col">
-                <h2>Selamat Datang, <?php echo htmlspecialchars($_SESSION['admin_name']); ?>!</h2>
-                <p class="text-muted">Dashboard Admin Alfins Kost</p>
-            </div>
-        </div>
+        <h2>Selamat Datang, Administrator!</h2>
+        <p class="text-muted">Dashboard Admin Alfins Kost</p>
 
-        <!-- Quick Action Buttons -->
-        <div class="quick-actions">
-            <button class="btn btn-primary action-button" onclick="location.href='add_room.php'">
+        <!-- Quick Actions -->
+        <div class="mb-4">
+            <a href="add_room.php" class="btn btn-primary">
                 <i class="bi bi-plus-circle"></i> Tambah Kamar
-            </button>
-            <button class="btn btn-success action-button" onclick="location.href='bookings.php'">
+            </a>
+            <a href="manage_bookings.php" class="btn btn-success">
                 <i class="bi bi-calendar-check"></i> Kelola Pemesanan
-            </button>
-            <button class="btn btn-info action-button text-white" onclick="location.href='users.php'">
+            </a>
+            <a href="manage_users.php" class="btn btn-info text-white">
                 <i class="bi bi-people"></i> Kelola Penghuni
-            </button>
+            </a>
         </div>
 
         <!-- Statistics Cards -->
@@ -139,62 +102,12 @@ try {
         </div>
 
         <!-- Recent Bookings Table -->
-        <div class="row mt-4">
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">Pemesanan Terbaru</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Tanggal</th>
-                                        <th>Nama Pemesan</th>
-                                        <th>Nomor Kamar</th>
-                                        <th>Status</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($recentBookings as $booking): ?>
-                                    <tr>
-                                        <td><?php echo date('d/m/Y', strtotime($booking['booking_date'])); ?></td>
-                                        <td><?php echo htmlspecialchars($booking['full_name']); ?></td>
-                                        <td><?php echo htmlspecialchars($booking['room_number']); ?></td>
-                                        <td>
-                                            <?php
-                                            $statusClass = '';
-                                            switch($booking['booking_status']) {
-                                                case 'pending':
-                                                    $statusClass = 'warning';
-                                                    break;
-                                                case 'confirmed':
-                                                    $statusClass = 'success';
-                                                    break;
-                                                case 'cancelled':
-                                                    $statusClass = 'danger';
-                                                    break;
-                                            }
-                                            ?>
-                                            <span class="badge bg-<?php echo $statusClass; ?>">
-                                                <?php echo ucfirst($booking['booking_status']); ?>
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <a href="view_booking.php?id=<?php echo $booking['booking_id']; ?>" 
-                                               class="btn btn-sm btn-primary">
-                                                Detail
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Pemesanan Terbaru</h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">Belum ada data pemesanan.</p>
             </div>
         </div>
     </div>
