@@ -54,7 +54,7 @@ try {
         <h2>Selamat Datang, Administrator!</h2>
 
         <div class="mb-4">
-            <a href="add_room.php" class="btn btn-primary">
+            <a href="Add_room.php" class="btn btn-primary">
                 <i class="bi bi-plus-circle"></i> Tambah Kamar
             </a>
             <a href="manage_bookings.php" class="btn btn-success">
