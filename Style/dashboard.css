@@ -58,6 +58,31 @@ nav ul li a:hover {
     color: #3498db;
 }
 
+/* Modifikasi style untuk profile-image di dashboard.css */
+.profile-image {
+    width: 120px;  /* Ubah dari ukuran sebelumnya */
+    height: 120px; /* Ubah dari ukuran sebelumnya */
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #007bff;
+}
+
+/* Tambahkan class container untuk mengatur layout */
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+/* Optional: tambahkan media query untuk responsiveness */
+@media (max-width: 768px) {
+    .profile-image {
+        width: 80px;
+        height: 80px;
+    }
+}
+
 .main-content {
     max-width: auto;
     margin: 0;

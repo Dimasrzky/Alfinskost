@@ -37,13 +37,13 @@ if (!isLoggedIn()) {
             <!-- Profile Section -->
             <section class="profile-section">
                 <div class="profile-header">
-                <img src="<?php 
-                if (!empty($_SESSION['profile_photo'])) {
-                    echo '../' . $_SESSION['profile_photo'];
-                } else {
-                    echo '../Uploads/default-profile.png';
-                }
-                ?>" alt="Profile" class="profile-image">
+                    <img src="<?php 
+                        if (!empty($_SESSION['profile_photo'])) {
+                            echo '../' . $_SESSION['profile_photo'];
+                        } else {
+                            echo '../Uploads/default-profile.png';
+                        }
+                    ?>" alt="Profile" class="profile-image">
                     <div class="profile-info">
                         <h2>Selamat datang, <?php echo htmlspecialchars($_SESSION['full_name']); ?>!</h2>
                         <p>Status: Active Member</p>
