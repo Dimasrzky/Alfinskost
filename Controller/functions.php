@@ -16,16 +16,22 @@ function registerUser($data, $file = null) {
             ];
         }
         
-        // Handle profile photo
-        $profile_photo = null;
+        // Ubah bagian upload file
         if ($file && $file['error'] == 0) {
             $allowed = ['jpg', 'jpeg', 'png'];
             $filename = $file['name'];
             $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
             
             if (in_array($ext, $allowed)) {
-                $profile_photo = 'uploads/' . uniqid() . '.' . $ext;
-                move_uploaded_file($file['tmp_name'], $profile_photo);
+                // Pastikan path folder uploads absolut
+                $upload_dir = $_SERVER['DOCUMENT_ROOT'] . '/Alfinskost/Uploads/';
+                // Buat folder jika belum ada
+                if (!file_exists($upload_dir)) {
+                    mkdir($upload_dir, 0777, true);
+                }
+                $profile_photo = 'Uploads/' . uniqid() . '.' . $ext;
+                $upload_path = $upload_dir . basename($profile_photo);
+                move_uploaded_file($file['tmp_name'], $upload_path);
             }
         }
         
