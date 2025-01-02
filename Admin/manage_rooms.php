@@ -1,11 +1,12 @@
 <?php
-// manage_rooms.php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require_once '../Config/db_connect.php';
-session_start();
 
 if (!isset($_SESSION['admin_id'])) {
-   header("Location: Admin_login.php");
-   exit;
+    header("Location: Admin_login.php");
+    exit;
 }
 
 // Delete room
