@@ -7,41 +7,27 @@ if (!isset($_SESSION['admin_id'])) {
     exit;
 }
 
+$message = '';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
-        $room_number = $_POST['room_number'];
-        $floor = $_POST['floor'];
-        $status = $_POST['status'];
-        $facilities = $_POST['facilities'];
-        
-        // Insert room data
+        // Prepare the SQL statement
         $stmt = $pdo->prepare("INSERT INTO rooms (room_number, floor, status, facilities) VALUES (?, ?, ?, ?)");
         
-        if($stmt->execute([$room_number, $floor, $status, $facilities])) {
-            $room_id = $pdo->lastInsertId();
-            
-            // Handle photo upload
-            if(isset($_FILES['room_photos'])) {
-                $upload_dir = '../uploads/rooms/';
-                if (!file_exists($upload_dir)) {
-                    mkdir($upload_dir, 0777, true);
-                }
-                
-                foreach($_FILES['room_photos']['tmp_name'] as $key => $tmp_name) {
-                    $file_name = uniqid() . '_' . $_FILES['room_photos']['name'][$key];
-                    $upload_path = $upload_dir . $file_name;
-                    
-                    if(move_uploaded_file($tmp_name, $upload_path)) {
-                        // Save photo reference to database if needed
-                        $stmt = $pdo->prepare("UPDATE rooms SET room_photo = ? WHERE room_id = ?");
-                        $stmt->execute([$file_name, $room_id]);
-                    }
-                }
-            }
-            echo "<script>alert('Kamar berhasil ditambahkan!'); window.location.href='Admin_Dashboard.php';</script>";
-        }
+        // Execute with values
+        $stmt->execute([
+            $_POST['room_number'],
+            $_POST['floor'], 
+            $_POST['status'],
+            $_POST['facilities']
+        ]);
+
+        // Redirect if successful
+        header("Location: Admin_Dashboard.php?success");
+        exit;
+
     } catch(PDOException $e) {
-        echo "<script>alert('Error: " . $e->getMessage() . "');</script>";
+        $message = "Error: " . $e->getMessage();
     }
 }
 ?>
