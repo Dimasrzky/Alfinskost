@@ -2,7 +2,10 @@
 require_once '../Config/db_connect.php';
 require_once '../Controller/functions.php';
 
-if (isLoggedIn()) {
+session_start();
+
+// Jika sudah login, redirect ke dashboard
+if(isset($_SESSION['user_id'])) {
     header("Location: Dashboard.php");
     exit;
 }
@@ -11,83 +14,94 @@ $message = '';
 $messageType = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = trim($_POST['email']);
-    $password = $_POST['password'];
-    
-    if (empty($email) || empty($password)) {
-        $messageType = 'error';
-        $message = 'Mohon isi email dan password';
-    } else {
-        $result = loginUser($email, $password);
-        $messageType = $result['status'];
-        $message = $result['message'];
-        
-        if ($result['status'] == 'success') {
-            header("Location: dashboard.php");
-            exit;
-        }
-    }
-}
+    try {
+        $email = trim($_POST['email']);
+        $password = $_POST['password'];
 
-if ($user && password_verify($password, $user['password'])) {
-    $_SESSION['user_id'] = $user['user_id'];
-    $_SESSION['full_name'] = $user['full_name'];
-    
-    // Catat login history
-    $stmt = $pdo->prepare("INSERT INTO login_history (user_id, ip_address, user_agent) VALUES (?, ?, ?)");
-    $stmt->execute([
-        $user['user_id'],
-        $_SERVER['REMOTE_ADDR'],
-        $_SERVER['HTTP_USER_AGENT']
-    ]);
-    
-    header("Location: Dashboard.php");
-    exit;
+        // Validasi input
+        if (empty($email) || empty($password)) {
+            throw new Exception("Email dan password harus diisi!");
+        }
+
+        // Query untuk mencari user
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ? AND status = 'active'");
+        $stmt->execute([$email]);
+        $user = $stmt->fetch();
+
+        if ($user && password_verify($password, $user['password'])) {
+            // Set session
+            $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['full_name'] = $user['full_name'];
+            
+            // Catat login history
+            $stmt = $pdo->prepare("INSERT INTO login_history (user_id, ip_address, user_agent) VALUES (?, ?, ?)");
+            $stmt->execute([
+                $user['user_id'],
+                $_SERVER['REMOTE_ADDR'],
+                $_SERVER['HTTP_USER_AGENT']
+            ]);
+
+            header("Location: Dashboard.php");
+            exit;
+        } else {
+            throw new Exception("Email atau password salah!");
+        }
+    } catch(Exception $e) {
+        $message = $e->getMessage();
+        $messageType = 'danger';
+    }
 }
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login - Kost Booking</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Alfins Kost</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="bg-light">
-    <div class="container">
-        <div class="row justify-content-center mt-5">
-            <div class="col-md-4">
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="text-center">Login</h3>
                     </div>
                     <div class="card-body">
                         <?php if ($message): ?>
-                            <div class="alert alert-<?php echo $messageType == 'success' ? 'success' : 'danger'; ?>">
+                            <div class="alert alert-<?php echo $messageType; ?> alert-dismissible fade show">
                                 <?php echo $message; ?>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                             </div>
                         <?php endif; ?>
 
                         <form method="post" action="">
                             <div class="mb-3">
-                                <label>Email:</label>
-                                <input type="email" name="email" class="form-control" required>
+                                <label for="email" class="form-label">Email:</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
                             </div>
-                            
+
                             <div class="mb-3">
-                                <label>Password:</label>
-                                <input type="password" name="password" class="form-control" required>
+                                <label for="password" class="form-label">Password:</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
                             </div>
-                            
+
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-primary">Login</button>
                             </div>
                             
-                            <p class="text-center mt-3">Belum punya akun? <a href="register.php">Register di sini</a></p>
+                            <p class="text-center mt-3">
+                                Belum punya akun? <a href="Register.php">Register di sini</a>
+                            </p>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
