@@ -34,6 +34,18 @@ header {
     margin-right: auto; 
 }
 
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.site-logo {
+    width: 40px;  /* Sesuaikan dengan ukuran yang diinginkan */
+    height: 40px;
+    object-fit: contain;
+}
+
 nav {
     width: auto;
 }
