@@ -8,7 +8,7 @@ define('ADMIN_PASSWORD', 'admin123');
 
 // Redirect jika sudah login
 if(isset($_SESSION['admin_id'])) {
-    header("Location: admin_dashboard.php");
+    header("Location: Admin_Dashboard.php");
     exit;
 }
 
