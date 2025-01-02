@@ -33,6 +33,25 @@ header {
     letter-spacing: 2px;
     margin-right: auto; 
 }
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.site-logo {
+    width: 40px;  /* Sesuaikan dengan ukuran yang diinginkan */
+    height: 40px;
+    object-fit: contain;
+}
+
+.header-logo h1 {
+    margin: 0;
+    font-size: 24px;
+    color: white;
+}
+
 nav {
     width: auto;
 }

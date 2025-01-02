@@ -19,7 +19,10 @@ if (!isLoggedIn()) {
 <body>
     <header>
         <div class="header-container">
-            <h1>Alfins Kost</h1>
+            <div class="header-logo">
+                <img src="../Image/Logo Alfins Kost.png" alt="Logo" class="site-logo">
+                <h1>Alfins Kost</h1>
+            </div>
             <nav>
                 <ul>
                     <li><a href="#beranda">Beranda</a></li>
