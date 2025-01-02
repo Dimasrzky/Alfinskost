@@ -1,9 +1,11 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 // Client/Login.php
 require_once '../Config/db_connect.php';
 require_once '../Controller/functions.php';
-
-session_start();
 
 // Jika sudah login, redirect ke dashboard
 if(isset($_SESSION['user_id'])) {
