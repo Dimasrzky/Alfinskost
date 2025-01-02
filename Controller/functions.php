@@ -24,13 +24,25 @@ function registerUser($data, $file = null) {
             $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
             
             if (in_array($ext, $allowed)) {
-                $upload_dir = $_SERVER['DOCUMENT_ROOT'] . '../Alfinskost/Uploads/';
+                // Perbaiki path untuk folder upload
+                $base_dir = dirname(dirname(__FILE__)); // Naik satu level dari Controller
+                $upload_dir = $base_dir . '/Uploads/';
+                
+                // Buat folder jika belum ada
                 if (!file_exists($upload_dir)) {
-                    mkdir($upload_dir, 0777, true);
+                    if (!mkdir($upload_dir, 0777, true)) {
+                        throw new Exception('Gagal membuat direktori upload');
+                    }
                 }
+                
+                // Generate nama file unik
                 $profile_photo = 'Uploads/' . uniqid() . '.' . $ext;
-                $upload_path = $upload_dir . basename($profile_photo);
-                move_uploaded_file($file['tmp_name'], $upload_path);
+                $upload_path = $base_dir . '/' . $profile_photo;
+                
+                // Upload file
+                if (!move_uploaded_file($file['tmp_name'], $upload_path)) {
+                    throw new Exception('Gagal mengupload file');
+                }
             }
         }
         
