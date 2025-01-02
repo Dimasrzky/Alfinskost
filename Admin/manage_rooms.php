@@ -11,15 +11,26 @@ if (!isset($_SESSION['admin_id'])) {
 
 // Delete room
 if(isset($_POST['delete'])) {
-   $room_id = $_POST['room_id'];
-   try {
-       $stmt = $pdo->prepare("DELETE FROM rooms WHERE room_id = ?");
-       $stmt->execute([$room_id]);
-       header("Location: manage_rooms.php?success=deleted");
-       exit;
-   } catch(PDOException $e) {
-       $error = $e->getMessage();
-   }
+    $room_id = $_POST['room_id'];
+    try {
+        // Get type_id first
+        $stmt = $pdo->prepare("SELECT type_id FROM rooms WHERE room_id = ?");
+        $stmt->execute([$room_id]);
+        $type_id = $stmt->fetch()['type_id'];
+
+        // Delete from rooms first (child table)
+        $stmt = $pdo->prepare("DELETE FROM rooms WHERE room_id = ?");
+        $stmt->execute([$room_id]);
+
+        // Then delete from room_types (parent table)
+        $stmt = $pdo->prepare("DELETE FROM room_types WHERE type_id = ?");
+        $stmt->execute([$type_id]);
+
+        header("Location: manage_rooms.php?success=deleted");
+        exit;
+    } catch(PDOException $e) {
+        $error = $e->getMessage();
+    }
 }
 
 // Get all rooms
