@@ -54,9 +54,6 @@ try {
         <h2>Selamat Datang, Administrator!</h2>
 
         <div class="mb-4">
-            <a href="Add_room.php" class="btn btn-primary">
-                <i class="bi bi-plus-circle"></i> Tambah Kamar
-            </a>
             <a href="manage_rooms.php" class="btn btn-warning me-2"> 
                 <i class="bi bi-house-gear"></i> Kelola Kamar
             </a>
