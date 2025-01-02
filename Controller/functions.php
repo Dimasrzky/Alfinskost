@@ -16,16 +16,15 @@ function registerUser($data, $file = null) {
             ];
         }
         
-        // Ubah bagian upload file
+        // Handle profile photo
+        $profile_photo = null;
         if ($file && $file['error'] == 0) {
             $allowed = ['jpg', 'jpeg', 'png'];
             $filename = $file['name'];
             $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
             
             if (in_array($ext, $allowed)) {
-                // Pastikan path folder uploads absolut
-                $upload_dir = $_SERVER['DOCUMENT_ROOT'] . '/Alfinskost/Uploads/';
-                // Buat folder jika belum ada
+                $upload_dir = $_SERVER['DOCUMENT_ROOT'] . '../Alfinskost/Uploads/';
                 if (!file_exists($upload_dir)) {
                     mkdir($upload_dir, 0777, true);
                 }
@@ -75,6 +74,7 @@ function loginUser($email, $password) {
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['full_name'] = $user['full_name'];
+            $_SESSION['profile_photo'] = $user['profile_photo'];
             return [
                 'status' => 'success',
                 'message' => 'Login berhasil'

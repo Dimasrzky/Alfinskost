@@ -37,8 +37,13 @@ if (!isLoggedIn()) {
             <!-- Profile Section -->
             <section class="profile-section">
                 <div class="profile-header">
-                    <img src="<?php echo !empty($_SESSION['profile_photo']) ? $_SESSION['profile_photo'] : 'uploads/default-profile.png'; ?>" 
-                         alt="Profile" class="profile-image">
+                <img src="<?php 
+                if (!empty($_SESSION['profile_photo'])) {
+                    echo '../' . $_SESSION['profile_photo'];
+                } else {
+                    echo '../Uploads/default-profile.png';
+                }
+                ?>" alt="Profile" class="profile-image">
                     <div class="profile-info">
                         <h2>Selamat datang, <?php echo htmlspecialchars($_SESSION['full_name']); ?>!</h2>
                         <p>Status: Active Member</p>
@@ -97,16 +102,16 @@ if (!isLoggedIn()) {
                 
                 <div class="image-gallery">
                     <div class="image-container">
-                        <img src="./kamar.jpg" alt="Kamar">
+                        <img src="../Image/kamar.jpg" alt="Kamar">
                     </div>
                     <div class="image-container">
-                        <img src="./gambar dapur minimalis.jpg" alt="Dapur">
+                        <img src="../Image/gambar dapur minimalis.jpg" alt="Dapur">
                     </div>
                     <div class="image-container">
-                        <img src="./parkir.jpeg" alt="Parkir">
+                        <img src="../Image/parkir.jpeg" alt="Parkir">
                     </div>
                     <div class="image-container">
-                        <img src="./white-wifi-router-modern-free-photo.jpg" alt="WiFi">
+                        <img src="../Image/white-wifi-router-modern-free-photo.jpg" alt="WiFi">
                     </div>
                 </div>
             </section>
