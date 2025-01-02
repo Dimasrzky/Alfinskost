@@ -19,7 +19,7 @@ if (!isLoggedIn()) {
     <link href="../Style/Rooms.css" rel="stylesheet">
 </head>
 <body class="bg-light">
-    <?php include 'header.php'; ?>
+    <?php include 'Header.php'; ?>
 
     <div class="container py-5">
         <h2 class="mb-4">Daftar Kamar Tersedia</h2>
