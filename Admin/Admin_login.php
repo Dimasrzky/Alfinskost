@@ -6,12 +6,6 @@ session_start();
 define('ADMIN_EMAIL', 'admin@alfinskost.com');
 define('ADMIN_PASSWORD', 'admin123');
 
-// Redirect jika sudah login
-if(isset($_SESSION['admin_id'])) {
-    header("Location: Admin_Dashboard.php");
-    exit;
-}
-
 $message = '';
 $messageType = '';
 
@@ -23,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($email === "Alfinskost@gmail.com" && $password === "alfins123") {
         $_SESSION['admin_id'] = 1;
         $_SESSION['admin_name'] = 'Administrator';
-        header("Location: admin_dashboard.php");
+        header("Location: Admin_Dashboard.php");
         exit;
     } else {
         $message = "Email atau password salah!";
