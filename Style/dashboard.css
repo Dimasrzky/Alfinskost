@@ -44,7 +44,7 @@ header {
 
 .site-logo {
     width: 100px;  /* Sesuaikan dengan ukuran yang diinginkan */
-    height: auto;
+    height: 100px;
 }
 
 .header-logo h1 {
