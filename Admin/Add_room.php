@@ -11,25 +11,58 @@ $message = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
-        // Prepare the SQL statement
-        $stmt = $pdo->prepare("INSERT INTO rooms (room_number, floor, status, facilities) VALUES (?, ?, ?, ?)");
-        
-        // Execute with values
+        // Insert room type first
+        $stmt = $pdo->prepare("INSERT INTO room_types (type_name, description, price_monthly, price_yearly, facilities) 
+                             VALUES (?, ?, ?, ?, ?)");
         $stmt->execute([
-            $_POST['room_number'],
-            $_POST['floor'], 
-            $_POST['status'],
+            'Standard', // default type
+            'Standard Room',
+            $_POST['price'],
+            $_POST['price'] * 12, // yearly price
             $_POST['facilities']
         ]);
-
-        // Redirect if successful
-        header("Location: Admin_Dashboard.php?success");
+        $type_id = $pdo->lastInsertId();
+ 
+        // Then insert room
+        $stmt = $pdo->prepare("INSERT INTO rooms (room_number, type_id, floor, status, description) 
+                             VALUES (?, ?, ?, ?, ?)");
+        $stmt->execute([
+            $_POST['room_number'],
+            $type_id,
+            $_POST['floor'],
+            $_POST['status'], 
+            'Kamar ' . $_POST['room_number']
+        ]);
+        $room_id = $pdo->lastInsertId();
+ 
+        // Handle photo upload
+        if(!empty($_FILES['room_photos']['name'][0])) {
+            $upload_dir = '../uploads/rooms/';
+            if (!file_exists($upload_dir)) {
+                mkdir($upload_dir, 0777, true);
+            }
+ 
+            foreach($_FILES['room_photos']['tmp_name'] as $key => $tmp_name) {
+                $filename = uniqid() . '.jpg';
+                move_uploaded_file($tmp_name, $upload_dir . $filename);
+                
+                $stmt = $pdo->prepare("INSERT INTO room_photos (room_id, photo_url, is_primary) 
+                                     VALUES (?, ?, ?)");
+                $stmt->execute([
+                    $room_id,
+                    'uploads/rooms/' . $filename,
+                    $key === 0 ? 1 : 0
+                ]);
+            }
+        }
+ 
+        header("Location: Admin_Dashboard.php?success=1");
         exit;
-
+ 
     } catch(PDOException $e) {
         $message = "Error: " . $e->getMessage();
     }
-}
+ }
 ?>
 
 <!DOCTYPE html>
