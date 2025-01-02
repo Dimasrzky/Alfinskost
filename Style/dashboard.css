@@ -43,7 +43,6 @@ header {
 .site-logo {
     width: 40px;  /* Sesuaikan dengan ukuran yang diinginkan */
     height: 40px;
-    object-fit: contain;
 }
 
 .header-logo h1 {
