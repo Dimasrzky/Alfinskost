@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alfins Kost</title>
+    <link rel="stylesheet" href="Home.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h1>Alfins Kost</h1>
+            <nav>
+                <ul>
+                    <li><a href="#beranda">Beranda</a></li>
+                    <li><a href="#lokasi">Lokasi</a></li>
+                    <li><a href="#tentang">Tentang</a></li>
+                    <li><a href="#ulasan">Ulasan</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="main-content">
+            <section id="beranda">
+                <div class="welcome-section">
+                    <h2>Selamat Datang di Alfins Kost</h2>
+                    <p>Temukan kenyamanan dan ketenangan di Alfins Kost, pilihan terbaik untuk hunian Anda.</p>
+                </div>
+            </section>
+
+            <section id="lokasi">
+                <div class="location-info">
+                    <h2>Lokasi Kami</h2>
+                    <p>Kami berlokasi di Isekai City, dekat dengan berbagai fasilitas umum.</p>
+                </div>
+            </section>
+
+            <section id="tentang">
+                <div class="container mt-3">
+                    <h2>Tentang Kost</h2>
+                    <p>The .table-striped class adds zebra-stripes to a table:</p>            
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>Fasilitas</th>
+                          <th>Keterangan</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Kamar</td>
+                          <td>Nyaman dan bersih</td>
+                        </tr>
+                        <tr>
+                          <td>Wifi</td>
+                          <td>Kecepatan tinggi</td>
+                        </tr>
+                        <tr>
+                          <td>Dapur</td>
+                          <td>Bersama</td>
+                        </tr>
+                        <tr>
+                            <td>Parkir</td>
+                            <td>Luas & aman</td>
+                          </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                   
+                    <div class="image-gallery">
+                        <div class="image-container">
+                            <img src="./kamar.jpg" alt="Kamar">
+                        </div>
+                        <div class="image-container">
+                            <img src="./gambar dapur minimalis.jpg" alt="Dapur">
+                        </div>
+                        <div class="image-container">
+                            <img src="./parkir.jpeg" alt="Parkir">
+                        </div>
+                        <div class="image-container">
+                            <img src="./white-wifi-router-modern-free-photo.jpg" alt="WiFi">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="ulasan">
+                <div class="review-section">
+                    <div class="form-container my-5">
+                        <div class="row">
+                            <div class="col-md-6">
+                            <h2>Beri Ulasan</h2>
+                            <form action="#" method="post">
+                            <div class="form-group mb-3">
+                                <label for="nama">Nama:</label>
+                                <input type="text" id="nama" placeholder="nama" required>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label>Gender:</label>
+                                <div class="gender-options">
+                                    <div class="gender-option">
+                                        <input type="radio" id="laki-laki" name="gender" value="laki-laki" required>
+                                        <label for="laki-laki">Laki-laki</label>
+                                    </div>
+                                    <div class="gender-option">
+                                        <input type="radio" id="perempuan" name="gender" value="perempuan" required>
+                                        <label for="perempuan">Perempuan</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="nomorhp">Nomor HP:</label>
+                                <input type="tel" id="nomorhp" placeholder="nomorhp" required>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="ulasan">Ulasan:</label>
+                                <textarea id="ulasan" placeholder="ulasan" rows="4" required></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit"  class="btn btn-primary">Kirim Ulasan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2023 Alfins Kost. Hak cipta dilindungi.</p>
+        </div>
+    </footer>
+</body>
+</html>
+
+
+<!-- <div class="container my-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Form Pemesanan Barang</h2>
+            <form>
+                <div class="mb-3">
+                    <label for="nama" class="form-label">Nama Lengkap</label>
+                    <input type="text" class="form-control" id="nama" placeholder="Masukkan nama">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Masukkan email">
+                </div>
+                <div class="mb-3">
+                    <label for="produk" class="form-label">Pilih Produk</label>
+                    <select class="form-select" id="produk">
+                        <option selected>Pilih produk...</option>
+                        <option value="1">Produk A</option>
+                        <option value="2">Produk B</option>
+                        <option value="3">Produk C</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Pesan Sekarang</button>
+            </form>
+        </div>
+        
+
+        <div class="about-section">
+                    <h2>Tentang Alfins Kost</h2>
+                    <p>Alfins Kost menyediakan berbagai fasilitas untuk kenyamanan Anda:</p>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Fasilitas</th>
+                                    <th>Keterangan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Kamar</td>
+                                    <td>Nyaman dan bersih</td>
+                                </tr>
+                                <tr>
+                                    <td>WiFi</td>
+                                    <td>Kecepatan tinggi</td>
+                                </tr>
+                                <tr>
+                                    <td>Dapur</td>
+                                    <td>Bersama</td>
+                                </tr>
+                                <tr>
+                                    <td>Parkir</td>
+                                    <td>Luas dan aman</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> 
