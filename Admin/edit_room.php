@@ -77,13 +77,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="mb-3">
                                 <label>Status</label>
                                 <select name="status" class="form-control" required>
-                                    <option value="available" <?php echo $room['status'] == 'Tersedia' ? 'selected' : ''; ?>>
+                                    <option value="Tersedia" <?php echo $room['status'] == 'Tersedia' ? 'selected' : ''; ?>>
                                         Tersedia
                                     </option>
-                                    <option value="occupied" <?php echo $room['status'] == 'Terisi' ? 'selected' : ''; ?>>
+                                    <option value="Terisi" <?php echo $room['status'] == 'Terisi' ? 'selected' : ''; ?>>
                                         Terisi
                                     </option>
-                                    <option value="maintenance" <?php echo $room['status'] == 'Perbaikan' ? 'selected' : ''; ?>>
+                                    <option value="Perbaikan" <?php echo $room['status'] == 'Perbaikan' ? 'selected' : ''; ?>>
                                         Perbaikan
                                     </option>
                                 </select>
