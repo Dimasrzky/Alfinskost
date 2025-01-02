@@ -14,7 +14,8 @@ body {
 header {
     background-color: #000000;
     color: #ecf0f1;
-    padding: 1rem 0;
+    padding: 10px 20px;
+    position: sticky;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -24,6 +25,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 50px;
 }
 
 .header h1 {
@@ -37,17 +39,17 @@ header {
 .header-logo {
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 
 .site-logo {
     width: 100px;  /* Sesuaikan dengan ukuran yang diinginkan */
-    height: 100px;
-    object-fit: contain;
+    height: auto;
 }
 
 .header-logo h1 {
     margin: 0;
-    font-size: 24px;
+    font-size: 20px;
     color: white;
 }
 
