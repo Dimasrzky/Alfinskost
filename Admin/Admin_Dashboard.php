@@ -54,7 +54,7 @@ try {
         <h2>Selamat Datang, Administrator!</h2>
 
         <div class="mb-4">
-            <a href="manage_rooms.php" class="btn btn-warning me-2"> 
+            <a href="manage_rooms.php" class="btn btn-warning">
                 <i class="bi bi-house-gear"></i> Kelola Kamar
             </a>
             <a href="manage_bookings.php" class="btn btn-success">
