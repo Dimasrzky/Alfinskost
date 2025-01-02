@@ -25,7 +25,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 50px;
+    height: 100px;
 }
 
 .header h1 {
@@ -44,7 +44,7 @@ header {
 
 .site-logo {
     width: 100px;  /* Sesuaikan dengan ukuran yang diinginkan */
-    height: 100px;
+    height: auto;
 }
 
 .header-logo h1 {
