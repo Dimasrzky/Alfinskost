@@ -122,6 +122,7 @@ if (!isLoggedIn()) {
             
             <section id="kamar" class="my-5">
                 <div class="container">
+                    <h2>Cari kamar</h2>
                     <!-- Search and Filter -->
                     <div class="card mb-4">
                         <div class="card-body">
