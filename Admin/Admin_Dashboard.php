@@ -27,7 +27,7 @@ try {
     $stmt = $pdo->query("SELECT COUNT(*) as available FROM rooms WHERE status = 'available'");
     $availableRooms = $stmt->fetch()['available'];
     
-    $stmt = $pdo->query("SELECT COUNT(*) as total FROM users WHERE status = 'active'");
+    $stmt = $pdo->query("SELECT COUNT(DISTINCT user_id) as total FROM bookings WHERE booking_status = 'confirmed'");
     $totalUsers = $stmt->fetch()['total'];
     
     $stmt = $pdo->query("SELECT COUNT(*) as pending FROM bookings WHERE booking_status = 'pending'");
