@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link href="../Style/dashboard.css" rel="stylesheet">
 </head>
 <body class="bg-light">
-    <?php include 'Header.php'; ?>
+    <?php include 'header.php'; ?>
 
     <div class="container py-5">
         <div class="row">
