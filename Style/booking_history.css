@@ -1,0 +1,21 @@
+.table {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+ }
+ 
+ .table-hover tbody tr:hover {
+    background-color: #f8f9fa;
+ }
+ 
+ .table thead th {
+    background-color: #212529;
+    color: white;
+    border: none;
+ }
+ 
+ .badge {
+    font-size: 0.9em;
+    padding: 6px 12px;
+ }
