@@ -55,7 +55,7 @@ if (!isLoggedIn()) {
                 </div>
                 <div class="profile-actions">
                     <a href="#" class="btn btn-primary">Edit Profile</a>
-                    <a href="#" class="btn btn-outline-primary">Riwayat Booking</a>
+                    <a href="booking_history.php" class="btn btn-outline-primary">Riwayat Booking</a>
                 </div>
             </section>
 
