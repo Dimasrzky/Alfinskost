@@ -77,30 +77,22 @@ $bookings = $pdo->query($query)->fetchAll();
                                         <td>Kamar <?php echo htmlspecialchars($booking['room_number']); ?></td>
                                         <td>
                                             <?php 
-                                            $paymentClass = '';
-                                            $paymentText = '';
+                                            $statusClass = '';
+                                            $statusText = '';
                                             
-                                            if (!empty($booking['payment_status'])) {
-                                                switch($booking['payment_status']) {
-                                                    case 'pending':
-                                                        $paymentClass = 'info';
-                                                        $paymentText = 'Menunggu Verifikasi';
-                                                        break;
-                                                    case 'paid':
-                                                        $paymentClass = 'success';
-                                                        $paymentText = 'Lunas';
-                                                        break;
-                                                    default:
-                                                        $paymentClass = 'warning';
-                                                        $paymentText = 'Belum Bayar';
-                                                }
+                                            if($booking['payment_status'] == 'paid') {
+                                                $statusClass = 'success';
+                                                $statusText = 'Lunas';
+                                            } else if($booking['payment_status'] == 'pending') {
+                                                $statusClass = 'info';
+                                                $statusText = 'Menunggu Verifikasi';
                                             } else {
-                                                $paymentClass = 'warning';
-                                                $paymentText = 'Belum Bayar';
+                                                $statusClass = 'warning';
+                                                $statusText = 'Belum Bayar';
                                             }
                                             ?>
-                                            <span class="badge bg-<?php echo $paymentClass; ?>">
-                                                <?php echo $paymentText; ?>
+                                            <span class="badge bg-<?php echo $statusClass; ?>">
+                                                <?php echo $statusText; ?>
                                             </span>
                                         </td>
 

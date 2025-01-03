@@ -8,7 +8,7 @@ if (!isLoggedIn()) {
 }
 
 // Get user's booking history
-$stmt = $pdo->prepare("SELECT b.*, r.room_number, p.payment_status 
+$stmt = $pdo->prepare("SELECT b.*, r.room_number, p.payment_status
                        FROM bookings b
                        JOIN rooms r ON b.room_id = r.room_id
                        LEFT JOIN payments p ON b.booking_id = p.booking_id
@@ -73,24 +73,19 @@ $bookings = $stmt->fetchAll();
                                     </span>
                                 </td>
                                 <td>
-                                    <?php
-                                    $payment_status = $booking['payment_status'] ?? 'unpaid';
+                                    <?php 
                                     $paymentClass = '';
                                     $paymentText = '';
                                     
-                                    switch($payment_status) {
-                                        case 'unpaid':
-                                            $paymentClass = 'warning';
-                                            $paymentText = 'Belum Bayar';
-                                            break;
-                                        case 'pending':
-                                            $paymentClass = 'info';
-                                            $paymentText = 'Menunggu Verifikasi';
-                                            break;
-                                        case 'paid':
-                                            $paymentClass = 'success';
-                                            $paymentText = 'Lunas';
-                                            break;
+                                    if($booking['payment_status'] == 'paid') {
+                                        $paymentClass = 'success';
+                                        $paymentText = 'Lunas';
+                                    } else if($booking['payment_status'] == 'pending') {
+                                        $paymentClass = 'info';
+                                        $paymentText = 'Menunggu Verifikasi';
+                                    } else {
+                                        $paymentClass = 'warning';
+                                        $paymentText = 'Belum Bayar';
                                     }
                                     ?>
                                     <span class="badge bg-<?php echo $paymentClass; ?>">
