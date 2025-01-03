@@ -25,12 +25,18 @@ $bookings = $stmt->fetchAll();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riwayat Booking - Alfins Kost</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <link href="../Style/booking_history.css" rel="stylesheet">
 </head>
 <body>
     <?php include 'header.php'; ?>
 
     <div class="container mt-4">
+        <div class="mb-3">
+            <a href="Dashboard.php" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Kembali
+            </a>
+        </div>
         <h2>Riwayat Booking</h2>
         
         <?php if (empty($bookings)): ?>
