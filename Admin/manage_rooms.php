@@ -59,10 +59,10 @@ $rooms = $pdo->query($query)->fetchAll();
             <a href="Admin_Dashboard.php" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> Kembali
             </a>
+            <a href="Add_room.php" class="btn btn-primary">Tambah Kamar</a>
         </div>
        <div class="d-flex justify-content-between align-items-center mb-4">
            <h2>Kelola Kamar</h2>
-           <a href="Add_room.php" class="btn btn-primary">Tambah Kamar</a>
        </div>
 
        <div class="row">
