@@ -89,6 +89,16 @@ $bookings = $stmt->fetchAll();
                                         <?php echo ucfirst($booking['payment_status']); ?>
                                     </span>
                                 </td>
+                                <td>
+                                    <?php if($booking['payment_status'] == 'unpaid'): ?>
+                                        <a href="payment.php?id=<?php echo $booking['booking_id']; ?>" 
+                                        class="btn btn-primary btn-sm">Bayar Sekarang</a>
+                                    <?php else: ?>
+                                        <span class="badge bg-<?php echo $booking['payment_status'] == 'paid' ? 'success' : 'warning'; ?>">
+                                            <?php echo ucfirst($booking['payment_status']); ?>
+                                        </span>
+                                    <?php endif; ?>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

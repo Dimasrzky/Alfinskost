@@ -27,9 +27,10 @@ try {
     $stmt = $pdo->query("SELECT COUNT(*) as available FROM rooms WHERE status = 'available'");
     $availableRooms = $stmt->fetch()['available'];
     
-    $stmt = $pdo->query("SELECT COUNT(DISTINCT user_id) as total FROM bookings WHERE booking_status = 'confirmed'");
+    // Update query total penghuni
+    $stmt = $pdo->query("SELECT COUNT(DISTINCT user_id) as total FROM bookings WHERE booking_status = 'confirmed' AND payment_status = 'paid'");
     $totalUsers = $stmt->fetch()['total'];
-    
+        
     $stmt = $pdo->query("SELECT COUNT(*) as pending FROM bookings WHERE booking_status = 'pending'");
     $pendingBookings = $stmt->fetch()['pending'];
 } catch(PDOException $e) {
