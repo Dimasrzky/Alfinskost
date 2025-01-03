@@ -76,11 +76,11 @@ $bookings = $stmt->fetchAll();
                                     switch($booking['booking_status']) {
                                         case 'pending':
                                             $bookingClass = 'warning';
-                                            $bookingText = 'Pending';
+                                            $bookingText = 'Menunggu Verifikasi';
                                             break;
                                         case 'confirmed':
                                             $bookingClass = 'success';
-                                            $bookingText = 'Confirmed';
+                                            $bookingText = 'Disetujui';
                                             break;
                                         case 'cancelled':
                                             $bookingClass = 'danger';
@@ -95,28 +95,10 @@ $bookings = $stmt->fetchAll();
 
                                 <!-- Status Pembayaran -->
                                 <td>
-                                    <?php if($booking['booking_status'] != 'cancelled'): ?>
-                                        <?php
-                                        $paymentClass = '';
-                                        $paymentText = '';
-                                        switch($booking['payment_status']) {
-                                            case 'unpaid':
-                                                $paymentClass = 'warning';
-                                                $paymentText = 'Belum Bayar';
-                                                break;
-                                            case 'pending':
-                                                $paymentClass = 'info';
-                                                $paymentText = 'Menunggu Konfirmasi';
-                                                break;
-                                            case 'paid':
-                                                $paymentClass = 'success';
-                                                $paymentText = 'Lunas';
-                                                break;
-                                        }
-                                        ?>
-                                        <span class="badge bg-<?php echo $paymentClass; ?>">
-                                            <?php echo $paymentText; ?>
-                                        </span>
+                                    <?php if($booking['booking_status'] == 'confirmed'): ?>
+                                        <span class="badge bg-warning">Belum Bayar</span>
+                                    <?php elseif($booking['booking_status'] == 'pending'): ?>
+                                        <span class="badge bg-secondary">Menunggu Verifikasi</span>
                                     <?php else: ?>
                                         <span class="badge bg-danger">Dibatalkan</span>
                                     <?php endif; ?>
@@ -124,15 +106,11 @@ $bookings = $stmt->fetchAll();
 
                                 <!-- Aksi -->
                                 <td>
-                                    <?php if($booking['booking_status'] != 'cancelled'): ?>
-                                        <?php if($booking['payment_status'] == 'unpaid'): ?>
-                                            <a href="payment.php?id=<?php echo $booking['booking_id']; ?>" 
-                                            class="btn btn-primary btn-sm">Bayar Sekarang</a>
-                                        <?php elseif($booking['payment_status'] == 'pending'): ?>
-                                            <span class="badge bg-info">Menunggu Verifikasi</span>
-                                        <?php else: ?>
-                                            <span class="badge bg-success">Selesai</span>
-                                        <?php endif; ?>
+                                    <?php if($booking['booking_status'] == 'confirmed' && $booking['payment_status'] == 'unpaid'): ?>
+                                        <a href="payment.php?id=<?php echo $booking['booking_id']; ?>" 
+                                        class="btn btn-primary btn-sm">Bayar Sekarang</a>
+                                    <?php elseif($booking['booking_status'] == 'pending'): ?>
+                                        <span class="badge bg-warning">Menunggu Verifikasi Admin</span>
                                     <?php else: ?>
                                         <span class="badge bg-danger">Dibatalkan</span>
                                     <?php endif; ?>
