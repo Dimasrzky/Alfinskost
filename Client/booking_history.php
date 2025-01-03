@@ -66,38 +66,41 @@ $bookings = $stmt->fetchAll();
                                 <td><?php echo date('d/m/Y', strtotime($booking['check_out_date'])); ?></td>
                                 <td><?php echo $booking['duration']; ?> bulan</td>
                                 <td>Rp <?php echo number_format($booking['total_price'], 0, ',', '.'); ?></td>
+                                <!-- Kolom Status Pembayaran -->
                                 <td>
-                                    <?php
-                                    $statusClass = '';
-                                    switch($booking['booking_status']) {
+                                    <?php 
+                                    $paymentClass = '';
+                                    switch($booking['payment_status']) {
+                                        case 'unpaid':
+                                            $paymentClass = 'warning';
+                                            $paymentText = 'Belum Bayar';
+                                            break;
                                         case 'pending':
-                                            $statusClass = 'warning';
+                                            $paymentClass = 'info';
+                                            $paymentText = 'Menunggu Konfirmasi';
                                             break;
-                                        case 'confirmed':
-                                            $statusClass = 'success';
-                                            break;
-                                        case 'cancelled':
-                                            $statusClass = 'danger';
+                                        case 'paid':
+                                            $paymentClass = 'success';
+                                            $paymentText = 'Lunas';
                                             break;
                                     }
                                     ?>
-                                    <span class="badge bg-<?php echo $statusClass; ?>">
-                                        <?php echo ucfirst($booking['booking_status']); ?>
+                                    <span class="badge bg-<?php echo $paymentClass; ?>">
+                                        <?php echo $paymentText; ?>
                                     </span>
                                 </td>
+
+                                <!-- Kolom Aksi -->
                                 <td>
-                                    <span class="badge bg-<?php echo $booking['payment_status'] == 'paid' ? 'success' : 'warning'; ?>">
-                                        <?php echo ucfirst($booking['payment_status']); ?>
-                                    </span>
-                                </td>
-                                <td>
-                                    <?php if($booking['payment_status'] == 'unpaid'): ?>
-                                        <a href="payment.php?id=<?php echo $booking['booking_id']; ?>" 
-                                        class="btn btn-primary btn-sm">Bayar Sekarang</a>
+                                    <?php if($booking['booking_status'] != 'cancelled'): ?>
+                                        <?php if($booking['payment_status'] == 'unpaid'): ?>
+                                            <a href="payment.php?id=<?php echo $booking['booking_id']; ?>" 
+                                            class="btn btn-primary btn-sm">Bayar Sekarang</a>
+                                        <?php elseif($booking['payment_status'] == 'pending'): ?>
+                                            <span class="badge bg-info">Menunggu Verifikasi</span>
+                                        <?php endif; ?>
                                     <?php else: ?>
-                                        <span class="badge bg-<?php echo $booking['payment_status'] == 'paid' ? 'success' : 'warning'; ?>">
-                                            <?php echo ucfirst($booking['payment_status']); ?>
-                                        </span>
+                                        <span class="badge bg-danger">Dibatalkan</span>
                                     <?php endif; ?>
                                 </td>
                             </tr>
