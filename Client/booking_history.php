@@ -8,10 +8,10 @@ if (!isLoggedIn()) {
 }
 
 // Get user's booking history
-$stmt = $pdo->prepare("SELECT b.*, r.room_number, rt.price_monthly 
+$stmt = $pdo->prepare("SELECT b.*, r.room_number, p.payment_status 
                        FROM bookings b
                        JOIN rooms r ON b.room_id = r.room_id
-                       JOIN room_types rt ON r.type_id = rt.type_id
+                       LEFT JOIN payments p ON b.booking_id = p.booking_id
                        WHERE b.user_id = ?
                        ORDER BY b.booking_date DESC");
 $stmt->execute([$_SESSION['user_id']]);
@@ -67,38 +67,18 @@ $bookings = $stmt->fetchAll();
                                 <td><?php echo date('d/m/Y', strtotime($booking['check_out_date'])); ?></td>
                                 <td><?php echo $booking['duration']; ?> bulan</td>
                                 <td>Rp <?php echo number_format($booking['total_price'], 0, ',', '.'); ?></td>
-                                
-                                <!-- Status Booking -->
                                 <td>
-                                    <?php
-                                    $bookingClass = '';
-                                    $bookingText = '';
-                                    switch($booking['booking_status']) {
-                                        case 'pending':
-                                            $bookingClass = 'warning';
-                                            $bookingText = 'Pending';
-                                            break;
-                                        case 'confirmed':
-                                            $bookingClass = 'success';
-                                            $bookingText = 'Disetujui';
-                                            break;
-                                        case 'cancelled':
-                                            $bookingClass = 'danger';
-                                            $bookingText = 'Dibatalkan';
-                                            break;
-                                    }
-                                    ?>
-                                    <span class="badge bg-<?php echo $bookingClass; ?>">
-                                        <?php echo $bookingText; ?>
+                                    <span class="badge bg-<?php echo $booking['booking_status'] == 'confirmed' ? 'success' : 'warning'; ?>">
+                                        <?php echo $booking['booking_status'] == 'confirmed' ? 'Disetujui' : 'Pending'; ?>
                                     </span>
                                 </td>
-
-                                <!-- Status Pembayaran -->
                                 <td>
-                                    <?php 
+                                    <?php
+                                    $payment_status = $booking['payment_status'] ?? 'unpaid';
                                     $paymentClass = '';
                                     $paymentText = '';
-                                    switch($booking['payment_status']) {
+                                    
+                                    switch($payment_status) {
                                         case 'unpaid':
                                             $paymentClass = 'warning';
                                             $paymentText = 'Belum Bayar';
@@ -117,25 +97,16 @@ $bookings = $stmt->fetchAll();
                                         <?php echo $paymentText; ?>
                                     </span>
                                 </td>
-
-                                <!-- Aksi -->
                                 <td>
                                     <?php
                                     if($booking['booking_status'] == 'confirmed') {
-                                        if($booking['payment_status'] == 'unpaid') {
-                                            // Belum bayar
+                                        if($payment_status == 'unpaid') {
                                             echo '<a href="payment.php?id=' . $booking['booking_id'] . '" class="btn btn-primary btn-sm">Bayar Sekarang</a>';
-                                        } elseif($booking['payment_status'] == 'pending') {
-                                            // Menunggu verifikasi pembayaran
+                                        } elseif($payment_status == 'pending') {
                                             echo '<span class="badge bg-info">Menunggu Verifikasi</span>';
-                                        } elseif($booking['payment_status'] == 'paid') {
-                                            // Pembayaran selesai
+                                        } elseif($payment_status == 'paid') {
                                             echo '<span class="badge bg-success"><i class="bi bi-check-circle"></i> Selesai</span>';
                                         }
-                                    } elseif($booking['booking_status'] == 'pending') {
-                                        echo '<span class="badge bg-warning">Menunggu Verifikasi Admin</span>';
-                                    } elseif($booking['booking_status'] == 'cancelled') {
-                                        echo '<span class="badge bg-danger">Dibatalkan</span>';
                                     }
                                     ?>
                                 </td>
