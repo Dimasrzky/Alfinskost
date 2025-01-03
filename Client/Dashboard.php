@@ -15,7 +15,7 @@ if (!isLoggedIn()) {
     <title>Dashboard - Alfins Kost</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../Style/dashboard.css" rel="stylesheet">
-    <link rel="icon" type="png" href="Logo Alfins Kost.png">
+    <link rel="icon" type="png" href="../Image/Logo Alfins Kost.png">
 </head>
 <body>
     <header>
