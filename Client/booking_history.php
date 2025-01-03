@@ -99,7 +99,9 @@ $bookings = $stmt->fetchAll();
                                 </td>
                                 <td>
                                     <?php
-                                    if($booking['booking_status'] == 'confirmed') {
+                                    if($booking['booking_status'] == 'pending') {
+                                        echo '<span class="badge bg-warning">Menunggu Verifikasi Admin</span>';
+                                    } elseif($booking['booking_status'] == 'confirmed') {
                                         if($payment_status == 'unpaid') {
                                             echo '<a href="payment.php?id=' . $booking['booking_id'] . '" class="btn btn-primary btn-sm">Bayar Sekarang</a>';
                                         } elseif($payment_status == 'pending') {
@@ -107,6 +109,8 @@ $bookings = $stmt->fetchAll();
                                         } elseif($payment_status == 'paid') {
                                             echo '<span class="badge bg-success"><i class="bi bi-check-circle"></i> Selesai</span>';
                                         }
+                                    } elseif($booking['booking_status'] == 'cancelled') {
+                                        echo '<span class="badge bg-danger">Dibatalkan</span>';
                                     }
                                     ?>
                                 </td>
