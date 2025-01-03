@@ -26,3 +26,7 @@ body {
     padding: 10px;
     font-weight: 500;
 }
+
+.login-logo img {
+    max-width: 60px;
+}
