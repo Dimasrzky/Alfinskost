@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Login - Alfins Kost</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../Style/Login.css" rel="stylesheet">
-</head>
+    <link rel="icon" type="png" href="../Image/Logo Alfins Kost.png">
 <body>
     <div class="login-container">
         <div class="login-box">
