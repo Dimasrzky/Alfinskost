@@ -110,7 +110,7 @@ $bookings = $pdo->query($query)->fetchAll();
                                                 class="btn btn-success btn-sm">Verifikasi Pembayaran</a>
                                             <?php elseif($booking['payment_status'] == 'paid'): ?>
                                                 <span class="badge bg-success">
-                                                    <i class="bi bi-check-circle"></i> Pembayaran Terverifikasi
+                                                    <i class="bi bi-check-circle"></i> Terverifikasi
                                                 </span>
                                             <?php endif; ?>
                                         </td>
