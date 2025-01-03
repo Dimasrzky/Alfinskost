@@ -25,7 +25,6 @@ $bookings = $pdo->query($query)->fetchAll();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kelola Pemesanan - Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../Style/booking_history.css" rel="stylesheet">
 
 </head>
 <body class="bg-light">
