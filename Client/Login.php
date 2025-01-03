@@ -64,42 +64,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Alfins Kost</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .login-container {
-            max-width: 400px;
-            margin: 100px auto;
-        }
-        .login-box {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
-        .login-logo {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .login-logo img {
-            max-width: 150px;
-        }
-        .form-control {
-            padding: 10px 15px;
-            border-radius: 5px;
-        }
-        .btn-primary {
-            padding: 10px;
-            font-weight: 500;
-        }
-    </style>
+    <link href="../Style/Login.css" rel="stylesheet">
 </head>
 <body>
     <div class="login-container">
         <div class="login-box">
             <div class="login-logo">
-                <img src="../assets/images/logo.png" alt="Alfins Kost Logo">
+                <img src="../Image/Logo Alfins Kost.png" alt="Alfins Kost Logo">
             </div>
             <h2 class="text-center mb-4">Login</h2>
             
