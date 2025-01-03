@@ -182,8 +182,8 @@ if (!isLoggedIn()) {
                                         <strong>Fasilitas:</strong> <?php echo htmlspecialchars($room['facilities']); ?>
                                     </p>
                                     <?php if($room['status'] === 'available'): ?>
-                                        <button onclick="bookRoom(<?php echo $room['room_id']; ?>)" 
-                                                class="btn btn-primary w-100">
+                                        <button onclick="location.href='booking.php?room_id=<?php echo $room['room_id']; ?>'" 
+                                            class="btn btn-primary w-100">
                                             Pesan Kamar
                                         </button>
                                     <?php else: ?>
