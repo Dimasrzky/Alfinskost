@@ -76,7 +76,7 @@ $bookings = $stmt->fetchAll();
                                     switch($booking['booking_status']) {
                                         case 'pending':
                                             $bookingClass = 'warning';
-                                            $bookingText = 'Menunggu Verifikasi';
+                                            $bookingText = 'Pending';
                                             break;
                                         case 'confirmed':
                                             $bookingClass = 'success';
