@@ -55,7 +55,7 @@ $rooms = $pdo->query($query)->fetchAll();
    <?php include 'Admin_header.php'; ?>
 
    <div class="container mt-4">
-        <div class="mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-4">
             <a href="Admin_Dashboard.php" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> Kembali
             </a>
