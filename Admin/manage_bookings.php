@@ -75,28 +75,46 @@ $bookings = $pdo->query($query)->fetchAll();
                                         <td><?php echo htmlspecialchars($booking['full_name']); ?></td>
                                         <td>Kamar <?php echo htmlspecialchars($booking['room_number']); ?></td>
                                         <td>
-                                            <span class="badge bg-<?php 
-                                                echo $booking['booking_status'] == 'pending' ? 'warning' : 
-                                                    ($booking['booking_status'] == 'confirmed' ? 'success' : 'danger'); 
-                                            ?>">
-                                                <?php echo ucfirst($booking['booking_status']); ?>
+                                            <?php
+                                            $paymentClass = '';
+                                            switch($booking['payment_status']) {
+                                                case 'pending':
+                                                    $paymentClass = 'info';
+                                                    $paymentText = 'Menunggu Verifikasi';
+                                                    break;
+                                                case 'paid':
+                                                    $paymentClass = 'success';
+                                                    $paymentText = 'Lunas';
+                                                    break;
+                                                default:
+                                                    $paymentClass = 'warning';
+                                                    $paymentText = 'Belum Bayar';
+                                            }
+                                            ?>
+                                            <span class="badge bg-<?php echo $paymentClass; ?>">
+                                                <?php echo $paymentText; ?>
                                             </span>
                                         </td>
                                         <td>
-                                            <?php if($booking['booking_status'] == 'pending'): ?>
-                                                <button class="btn btn-success btn-sm" onclick="confirmBooking(<?php echo $booking['booking_id']; ?>)">
-                                                    Konfirmasi
-                                                </button>
-                                                <button class="btn btn-danger btn-sm" onclick="cancelBooking(<?php echo $booking['booking_id']; ?>)">
-                                                    Tolak
-                                                </button>
+                                            <?php if($booking['booking_status'] == 'confirmed'): ?>
+                                                <?php if($booking['payment_status'] == 'pending'): ?>
+                                                    <a href="verify_payment.php?id=<?php echo $booking['booking_id']; ?>" 
+                                                    class="btn btn-success btn-sm">Verifikasi Pembayaran</a>
+                                                <?php elseif($booking['payment_status'] == 'paid'): ?>
+                                                    <span class="badge bg-success">
+                                                        <i class="bi bi-check-circle"></i> Pembayaran Terverifikasi
+                                                    </span>
+                                                <?php endif; ?>
                                             <?php endif; ?>
-                                            <button class="btn btn-info btn-sm" onclick="viewDetails(<?php echo $booking['booking_id']; ?>)">
-                                                Detail
-                                            </button>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
+                            <?php endif; ?>
+                            <?php if(isset($_GET['success']) && $_GET['success'] == 'payment_verified'): ?>
+                                <div class="alert alert-success alert-dismissible fade show">
+                                    Pembayaran berhasil diverifikasi! Penghuni baru telah ditambahkan.
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
                             <?php endif; ?>
                         </tbody>
                     </table>
