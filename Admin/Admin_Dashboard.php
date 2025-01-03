@@ -57,7 +57,7 @@ try {
 
         <div class="mb-4">
             <a href="manage_rooms.php" class="btn btn-warning">
-                <i class="bi bi-house-door stat-icon"></i> Kelola Kamar
+                <i class="bi bi-house-door"></i> Kelola Kamar
             </a>
             <a href="manage_bookings.php" class="btn btn-success">
                 <i class="bi bi-calendar-check"></i> Kelola Pemesanan
