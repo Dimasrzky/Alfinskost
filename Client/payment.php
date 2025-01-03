@@ -24,7 +24,6 @@ if (!$booking) {
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     try {
-        // Process payment upload
         if (isset($_FILES['payment_proof']) && $_FILES['payment_proof']['error'] == 0) {
             $upload_dir = '../uploads/payments/';
             if (!file_exists($upload_dir)) {
@@ -34,14 +33,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $filename = uniqid() . '_' . $_FILES['payment_proof']['name'];
             move_uploaded_file($_FILES['payment_proof']['tmp_name'], $upload_dir . $filename);
 
+            // Insert into payments table
+            $stmt = $pdo->prepare("INSERT INTO payments (booking_id, amount, payment_date, payment_method, 
+                                 payment_proof, payment_status, notes) 
+                                 VALUES (?, ?, NOW(), ?, ?, 'pending', ?)");
+            $stmt->execute([
+                $booking_id,
+                $booking['total_price'],
+                $_POST['payment_method'],
+                $filename,
+                $_POST['notes'] ?? null
+            ]);
+
             // Update booking payment status
-            $stmt = $pdo->prepare("UPDATE bookings SET 
-                                 payment_proof = ?,
-                                 payment_date = NOW(),
-                                 payment_method = ?,
-                                 payment_status = 'pending'
-                                 WHERE booking_id = ?");
-            $stmt->execute([$filename, $_POST['payment_method'], $booking_id]);
+            $stmt = $pdo->prepare("UPDATE bookings SET payment_status = 'pending' WHERE booking_id = ?");
+            $stmt->execute([$booking_id]);
 
             header("Location: booking_history.php?success=payment_uploaded");
             exit;
@@ -88,6 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <select name="payment_method" class="form-select" required>
                                     <option value="transfer">Transfer Bank</option>
                                     <option value="cash">Cash</option>
+                                    <option value="ewallet">E-Wallet</option>
                                 </select>
                             </div>
 
@@ -96,6 +103,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <input type="file" name="payment_proof" class="form-control" required 
                                        accept="image/*">
                                 <small class="text-muted">Upload bukti transfer/pembayaran</small>
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Catatan (opsional)</label>
+                                <textarea name="notes" class="form-control" rows="3"></textarea>
                             </div>
 
                             <button type="submit" class="btn btn-primary">Upload Pembayaran</button>
