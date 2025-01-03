@@ -33,11 +33,6 @@ $bookings = $pdo->query($query)->fetchAll();
 
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <div class="mb-3">
-                <a href="Admin_Dashboard.php" class="btn btn-secondary">
-                    <i class="bi bi-arrow-left"></i> Kembali
-                </a>
-            </div>
             <div class="container mt-4">
             <h2>Daftar Pemesanan</h2>
             <select class="form-select w-auto" id="statusFilter">
