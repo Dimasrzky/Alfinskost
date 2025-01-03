@@ -10,10 +10,11 @@ if (!isset($_SESSION['admin_id'])) {
 }
 
 // Get all bookings with user and room details
-$query = "SELECT b.*, u.full_name, r.room_number 
+$query = "SELECT b.*, u.full_name, r.room_number, p.payment_status
           FROM bookings b
-          JOIN users u ON b.user_id = u.user_id 
-          JOIN rooms r ON b.room_id = r.room_id 
+          JOIN users u ON b.user_id = u.user_id
+          JOIN rooms r ON b.room_id = r.room_id
+          LEFT JOIN payments p ON b.booking_id = p.booking_id
           ORDER BY b.booking_date DESC";
 $bookings = $pdo->query($query)->fetchAll();
 ?>
@@ -75,36 +76,42 @@ $bookings = $pdo->query($query)->fetchAll();
                                         <td><?php echo htmlspecialchars($booking['full_name']); ?></td>
                                         <td>Kamar <?php echo htmlspecialchars($booking['room_number']); ?></td>
                                         <td>
-                                            <?php
+                                            <?php 
                                             $paymentClass = '';
-                                            switch($booking['payment_status']) {
-                                                case 'pending':
-                                                    $paymentClass = 'info';
-                                                    $paymentText = 'Menunggu Verifikasi';
-                                                    break;
-                                                case 'paid':
-                                                    $paymentClass = 'success';
-                                                    $paymentText = 'Lunas';
-                                                    break;
-                                                default:
-                                                    $paymentClass = 'warning';
-                                                    $paymentText = 'Belum Bayar';
+                                            $paymentText = '';
+                                            
+                                            if (!empty($booking['payment_status'])) {
+                                                switch($booking['payment_status']) {
+                                                    case 'pending':
+                                                        $paymentClass = 'info';
+                                                        $paymentText = 'Menunggu Verifikasi';
+                                                        break;
+                                                    case 'paid':
+                                                        $paymentClass = 'success';
+                                                        $paymentText = 'Lunas';
+                                                        break;
+                                                    default:
+                                                        $paymentClass = 'warning';
+                                                        $paymentText = 'Belum Bayar';
+                                                }
+                                            } else {
+                                                $paymentClass = 'warning';
+                                                $paymentText = 'Belum Bayar';
                                             }
                                             ?>
                                             <span class="badge bg-<?php echo $paymentClass; ?>">
                                                 <?php echo $paymentText; ?>
                                             </span>
                                         </td>
+
                                         <td>
-                                            <?php if($booking['booking_status'] == 'confirmed'): ?>
-                                                <?php if($booking['payment_status'] == 'pending'): ?>
-                                                    <a href="verify_payment.php?id=<?php echo $booking['booking_id']; ?>" 
-                                                    class="btn btn-success btn-sm">Verifikasi Pembayaran</a>
-                                                <?php elseif($booking['payment_status'] == 'paid'): ?>
-                                                    <span class="badge bg-success">
-                                                        <i class="bi bi-check-circle"></i> Pembayaran Terverifikasi
-                                                    </span>
-                                                <?php endif; ?>
+                                            <?php if($booking['payment_status'] == 'pending'): ?>
+                                                <a href="verify_payment.php?id=<?php echo $booking['booking_id']; ?>" 
+                                                class="btn btn-success btn-sm">Verifikasi Pembayaran</a>
+                                            <?php elseif($booking['payment_status'] == 'paid'): ?>
+                                                <span class="badge bg-success">
+                                                    <i class="bi bi-check-circle"></i> Pembayaran Terverifikasi
+                                                </span>
                                             <?php endif; ?>
                                         </td>
                                     </tr>
