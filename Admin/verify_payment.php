@@ -15,8 +15,7 @@ if(isset($_GET['id'])) {
         
         // Update status pembayaran
         $stmt = $pdo->prepare("UPDATE payments SET 
-                             payment_status = 'paid',
-                             confirmed_at = NOW()
+                             payment_status = 'paid'
                              WHERE booking_id = ?");
         $stmt->execute([$booking_id]);
         
