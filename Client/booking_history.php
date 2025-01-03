@@ -54,6 +54,7 @@ $bookings = $stmt->fetchAll();
                             <th>Total Harga</th>
                             <th>Status Booking</th>
                             <th>Status Pembayaran</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
