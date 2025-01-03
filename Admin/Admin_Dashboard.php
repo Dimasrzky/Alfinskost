@@ -117,7 +117,50 @@ try {
                 <h5 class="card-title mb-0">Pemesanan Terbaru</h5>
             </div>
             <div class="card-body">
-                <p class="text-muted">Belum ada data pemesanan.</p>
+                <?php
+                try {
+                    $query = "SELECT b.*, u.full_name, r.room_number 
+                            FROM bookings b 
+                            JOIN users u ON b.user_id = u.user_id 
+                            JOIN rooms r ON b.room_id = r.room_id 
+                            ORDER BY b.booking_date DESC 
+                            LIMIT 5";
+                    $stmt = $pdo->query($query);
+                    $recent_bookings = $stmt->fetchAll();
+
+                    if(!empty($recent_bookings)) {
+                        echo '<div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal</th>
+                                            <th>Nama</th>
+                                            <th>Kamar</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>';
+                                    
+                        foreach($recent_bookings as $booking) {
+                            $status_class = $booking['booking_status'] == 'pending' ? 'warning' : 
+                                        ($booking['booking_status'] == 'confirmed' ? 'success' : 'danger');
+                            
+                            echo '<tr>
+                                    <td>'.date('d/m/Y', strtotime($booking['booking_date'])).'</td>
+                                    <td>'.htmlspecialchars($booking['full_name']).'</td>
+                                    <td>Kamar '.$booking['room_number'].'</td>
+                                    <td><span class="badge bg-'.$status_class.'">'.ucfirst($booking['booking_status']).'</span></td>
+                                </tr>';
+                        }
+                        
+                        echo '</tbody></table></div>';
+                    } else {
+                        echo '<p class="text-muted">Belum ada data pemesanan.</p>';
+                    }
+                } catch(PDOException $e) {
+                    echo '<div class="alert alert-danger">Error: '.$e->getMessage().'</div>';
+                }
+                ?>
             </div>
         </div>
     </div>
