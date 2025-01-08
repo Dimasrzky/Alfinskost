@@ -30,8 +30,6 @@ $bookings = $stmt->fetchAll();
     <link rel="icon" type="png" href="../Image/Logo Alfins Kost.png">
 </head>
 <body>
-    <?php include 'header.php'; ?>
-
     <div class="container mt-4">
         <div class="mb-3">
             <a href="Dashboard.php" class="btn btn-secondary">

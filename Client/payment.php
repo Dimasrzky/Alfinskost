@@ -68,8 +68,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link href="../Style/dashboard.css" rel="stylesheet">
 </head>
 <body class="bg-light">
-    <?php include 'header.php'; ?>
-
     <div class="container mt-4">
         <div class="mb-3">
             <a href="booking_history.php" class="btn btn-secondary">
