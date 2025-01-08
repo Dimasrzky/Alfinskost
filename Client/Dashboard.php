@@ -239,20 +239,15 @@ if (!isLoggedIn()) {
 
                                 <div class="form-group mb-3">
                                     <label class="d-block mb-2">Rating:</label>
-                                    <div class="rating-wrapper d-flex align-items-center">
-                                        <div class="star-input">
-                                            <input type="radio" id="star5" name="rating" value="5" required/>
-                                            <label for="star5" title="5 stars">★</label>
-                                            <input type="radio" id="star4" name="rating" value="4" required/>
-                                            <label for="star4" title="4 stars">★</label>
-                                            <input type="radio" id="star3" name="rating" value="3" required/>
-                                            <label for="star3" title="3 stars">★</label>
-                                            <input type="radio" id="star2" name="rating" value="2" required/>
-                                            <label for="star2" title="2 stars">★</label>
-                                            <input type="radio" id="star1" name="rating" value="1" required/>
-                                            <label for="star1" title="1 star">★</label>
+                                    <div class="rating-container">
+                                        <input type="hidden" name="rating" id="ratingInput" value="">
+                                        <div class="rating">
+                                            <i class='bx bx-star star' style="--i: 0;"></i>
+                                            <i class='bx bx-star star' style="--i: 1;"></i>
+                                            <i class='bx bx-star star' style="--i: 2;"></i>
+                                            <i class='bx bx-star star' style="--i: 3;"></i>
+                                            <i class='bx bx-star star' style="--i: 4;"></i>
                                         </div>
-                                        <span class="ms-2 rating-text">(<span id="ratingValue">0</span> dari 5)</span>
                                     </div>
                                 </div>
 

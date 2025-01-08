@@ -278,51 +278,31 @@ button[type="submit"]:hover {
     font-size: 0.875rem;
 }
 
-.rating-wrapper {
-    display: flex;
-    align-items: center;
+.rating-container {
+    text-align: left;
+    margin-bottom: 1rem;
 }
 
-.star-input {
+.rating {
     display: inline-flex;
     flex-direction: row-reverse;
-    margin: 0;
+    gap: 5px;
 }
 
-.star-input input[type="radio"] {
-    display: none;
-}
-
-.star-input label {
+.rating .star {
+    font-size: 32px;
     cursor: pointer;
-    padding: 0 2px;
-    font-size: 24px;
     color: #ddd;
-    transition: all 0.2s ease;
+    transition: color 0.2s ease;
 }
 
-.star-input:hover label {
+.rating .star.active,
+.rating .star.hovered {
     color: #FFD700;
 }
 
-.star-input label:hover ~ label {
-    color: #ddd;
-}
-
-.star-input input[type="radio"]:checked ~ label {
+.bxs-star {
     color: #FFD700;
-}
-
-.rating-text {
-    font-size: 14px;
-    color: #666;
-}
-
-/* Ensure stars are aligned */
-.star-input label {
-    line-height: 1;
-    display: inline-block;
-    vertical-align: middle;
 }
 
 footer {
