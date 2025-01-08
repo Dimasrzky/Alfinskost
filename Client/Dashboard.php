@@ -238,27 +238,21 @@ if (!isLoggedIn()) {
                                 </div>
 
                                 <div class="form-group mb-3">
-                                    <label>Rating:</label>
-                                    <div class="star-rating">
+                                    <label class="d-block mb-2">Rating:</label>
+                                    <div class="rating-wrapper d-flex align-items-center">
                                         <div class="star-input">
                                             <input type="radio" id="star5" name="rating" value="5" required/>
                                             <label for="star5" title="5 stars">★</label>
-                                            
                                             <input type="radio" id="star4" name="rating" value="4" required/>
                                             <label for="star4" title="4 stars">★</label>
-                                            
                                             <input type="radio" id="star3" name="rating" value="3" required/>
                                             <label for="star3" title="3 stars">★</label>
-                                            
                                             <input type="radio" id="star2" name="rating" value="2" required/>
                                             <label for="star2" title="2 stars">★</label>
-                                            
                                             <input type="radio" id="star1" name="rating" value="1" required/>
                                             <label for="star1" title="1 star">★</label>
                                         </div>
-                                        <div class="rating-value">
-                                            <span id="ratingValue">0</span> dari 5
-                                        </div>
+                                        <span class="ms-2 rating-text">(<span id="ratingValue">0</span> dari 5)</span>
                                     </div>
                                 </div>
 
@@ -275,7 +269,7 @@ if (!isLoggedIn()) {
 
                         <!-- Reviews Display Column -->
                         <div class="col-md-6">
-                            <h2>Ulasan Pengguna</h2>
+                            <h2>Ulasan Penghuni</h2>
                             <div class="reviews-container">
                                 <?php
                                 $stmt = $pdo->query("SELECT * FROM reviews ORDER BY created_at DESC");
