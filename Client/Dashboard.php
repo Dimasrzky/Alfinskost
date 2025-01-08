@@ -239,11 +239,13 @@ if (!isLoggedIn()) {
 
                                 <div class="form-group mb-3">
                                     <label>Rating:</label>
-                                    <div class="rating">
-                                        <?php for($i = 5; $i >= 1; $i--): ?>
-                                        <input type="radio" id="star<?php echo $i; ?>" name="rating" value="<?php echo $i; ?>" required>
-                                        <label for="star<?php echo $i; ?>">☆</label>
-                                        <?php endfor; ?>
+                                    <div class="rating-container">
+                                        <div class="rating">
+                                            <?php for($i = 5; $i >= 1; $i--): ?>
+                                            <input type="radio" id="star<?php echo $i; ?>" name="rating" value="<?php echo $i; ?>" required>
+                                            <label for="star<?php echo $i; ?>"></label>
+                                            <?php endfor; ?>
+                                        </div>
                                     </div>
                                 </div>
 

@@ -279,9 +279,12 @@ button[type="submit"]:hover {
 }
 
 .rating {
-    display: flex;
+    display: inline-flex;
     flex-direction: row-reverse;
-    justify-content: flex-end;
+    gap: 0.3rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
 }
 
 .rating input {
@@ -290,14 +293,30 @@ button[type="submit"]:hover {
 
 .rating label {
     cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 1.5rem;
-    color: #ddd;
-    margin: 0 2px;
+    color: #e4e4e4;
+    transition: all 0.2s ease;
+}
+
+.rating label:before {
+    content: '★';
 }
 
 .rating input:checked ~ label,
-.rating label:hover,
-.rating label:hover ~ label {
+.rating:not(:checked) label:hover,
+.rating:not(:checked) label:hover ~ label {
+    color: #ffd700;
+}
+
+.rating input:checked + label:hover,
+.rating input:checked ~ label:hover,
+.rating label:hover ~ input:checked ~ label,
+.rating input:checked ~ label:hover ~ label {
     color: #ffc107;
 }
 
