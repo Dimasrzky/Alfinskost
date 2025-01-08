@@ -10,12 +10,11 @@ if (!isset($_SESSION['admin_id'])) {
 }
 
 // Get all bookings with user and room details
-$query = "SELECT b.*, u.full_name, r.room_number, p.payment_status
+$query = "SELECT b.*, u.full_name, r.room_number, p.payment_status 
           FROM bookings b
           JOIN users u ON b.user_id = u.user_id
           JOIN rooms r ON b.room_id = r.room_id
-          LEFT JOIN payments p ON b.booking_id = p.booking_id
-          ORDER BY b.booking_date DESC";
+          LEFT JOIN payments p ON b.booking_id = p.booking_id";
 $bookings = $pdo->query($query)->fetchAll();
 ?>
 
