@@ -129,7 +129,6 @@ if (isset($_POST['toggle_status'])) {
                                           AND b.payment_status = 'paid'
                                           LIMIT 1) as current_room
                                          FROM users u 
-                                         WHERE u.role = 'user'
                                          ORDER BY u.registration_date DESC";
                                 $stmt = $pdo->query($query);
                                 
