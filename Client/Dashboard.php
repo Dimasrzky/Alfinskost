@@ -238,29 +238,13 @@ if (!isLoggedIn()) {
                                 </div>
 
                                 <div class="form-group mb-3">
-                                    <label class="d-block mb-2">Rating:</label>
-                                    <form class="rating">
-                                        <label>
-                                            <input type="radio" name="stars" value="1" />
-                                            <span class="icon">★</span>
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="stars" value="2" />
-                                            <span class="icon">★</span>
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="stars" value="3" />
-                                            <span class="icon">★</span>
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="stars" value="4" />
-                                            <span class="icon">★</span>
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="stars" value="5" />
-                                            <span class="icon">★</span>
-                                        </label>
-                                    </form>
+                                    <label>Rating:</label>
+                                    <div class="rating">
+                                        <?php for($i = 5; $i >= 1; $i--): ?>
+                                        <input type="radio" id="star<?php echo $i; ?>" name="rating" value="<?php echo $i; ?>" required>
+                                        <label for="star<?php echo $i; ?>">☆</label>
+                                        <?php endfor; ?>
+                                    </div>
                                 </div>
 
                                 <div class="form-group mb-3">
