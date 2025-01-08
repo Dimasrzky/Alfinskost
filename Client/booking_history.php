@@ -100,8 +100,8 @@ $bookings = $stmt->fetchAll();
                                         // Jika booking masih pending
                                         echo '<span class="badge bg-warning">Menunggu Verifikasi Admin</span>';
                                     } elseif($booking['booking_status'] == 'confirmed') {
-                                        // Jika booking sudah disetujui
-                                        if($booking['payment_status'] == 'unpaid') {
+                                        // Cek status pembayaran berdasarkan kolom payment_status di tabel bookings
+                                        if(empty($booking['payment_status']) || $booking['payment_status'] == 'unpaid') {  // Tambahkan pengecekan empty
                                             // Jika belum bayar, tampilkan tombol bayar
                                             echo '<a href="payment.php?id='.$booking['booking_id'].'" class="btn btn-primary btn-sm">Bayar Sekarang</a>';
                                         } elseif($booking['payment_status'] == 'pending') {
