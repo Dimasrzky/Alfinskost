@@ -97,14 +97,21 @@ $bookings = $pdo->query($query)->fetchAll();
                                         </td>
 
                                         <td>
-                                            <?php if($booking['payment_status'] == 'pending'): ?>
-                                                <a href="verify_payment.php?id=<?php echo $booking['booking_id']; ?>" 
-                                                class="btn btn-success btn-sm">Verifikasi Pembayaran</a>
-                                            <?php elseif($booking['payment_status'] == 'paid'): ?>
-                                                <span class="badge bg-success">
-                                                    <i class="bi bi-check-circle"></i> Terverifikasi
-                                                </span>
+                                            <?php if($booking['booking_status'] == 'pending'): ?>
+                                                <div class="btn-group">
+                                                    <a href="process_booking.php?action=confirm&id=<?php echo $booking['booking_id']; ?>" 
+                                                    class="btn btn-success btn-sm">Konfirmasi</a>
+                                                    <a href="process_booking.php?action=reject&id=<?php echo $booking['booking_id']; ?>" 
+                                                    class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menolak pesanan ini?')">Tolak</a>
+                                                </div>
+                                            <?php elseif($booking['booking_status'] == 'confirmed'): ?>
+                                                <?php if($booking['payment_status'] == 'pending'): ?>
+                                                    <a href="verify_payment.php?id=<?php echo $booking['booking_id']; ?>" 
+                                                    class="btn btn-success btn-sm">Verifikasi Pembayaran</a>
+                                                <?php endif; ?>
                                             <?php endif; ?>
+                                            <a href="booking_detail.php?id=<?php echo $booking['booking_id']; ?>" 
+                                            class="btn btn-info btn-sm text-white">Detail</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
