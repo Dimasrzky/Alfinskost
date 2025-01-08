@@ -108,36 +108,33 @@ if (isset($_POST['toggle_status'])) {
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>NIK</th>
                                 <th>Nama Lengkap</th>
                                 <th>Email</th>
                                 <th>No. Telepon</th>
+                                <th>Gender</th>
+                                <th>Kontak Darurat</th>
+                                <th>Pekerjaan</th>
                                 <th>Status</th>
-                                <th>Kamar Saat Ini</th>
-                                <th>Tgl Registrasi</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             try {
-                                $query = "SELECT u.*, 
-                                         (SELECT room_number 
-                                          FROM bookings b 
-                                          JOIN rooms r ON b.room_id = r.room_id 
-                                          WHERE b.user_id = u.user_id 
-                                          AND b.booking_status = 'confirmed' 
-                                          AND b.payment_status = 'paid'
-                                          LIMIT 1) as current_room
-                                         FROM users u 
-                                         ORDER BY u.registration_date DESC";
+                                $query = "SELECT * FROM users ORDER BY created_at DESC";
                                 $stmt = $pdo->query($query);
                                 
                                 while ($user = $stmt->fetch()) {
                                     echo "<tr>
                                             <td>{$user['user_id']}</td>
+                                            <td>{$user['nik']}</td>
                                             <td>{$user['full_name']}</td>
                                             <td>{$user['email']}</td>
-                                            <td>{$user['phone']}</td>
+                                            <td>{$user['phone_number']}</td>
+                                            <td>" . ($user['gender'] == 'L' ? 'Laki-laki' : 'Perempuan') . "</td>
+                                            <td>{$user['emergency_contact']}</td>
+                                            <td>{$user['occupation']}</td>
                                             <td>";
                                     if ($user['status'] == 'active') {
                                         echo "<span class='badge bg-success'>Active</span>";
@@ -145,10 +142,13 @@ if (isset($_POST['toggle_status'])) {
                                         echo "<span class='badge bg-danger'>Inactive</span>";
                                     }
                                     echo "</td>
-                                            <td>" . ($user['current_room'] ? "Kamar {$user['current_room']}" : "-") . "</td>
-                                            <td>" . date('d/m/Y', strtotime($user['registration_date'])) . "</td>
                                             <td>
                                                 <div class='btn-group'>
+                                                    <button type='button' class='btn btn-info btn-sm me-2' 
+                                                            data-bs-toggle='modal' 
+                                                            data-bs-target='#detailModal{$user['user_id']}'>
+                                                        <i class='bi bi-eye'></i>
+                                                    </button>
                                                     <form method='POST' class='me-2'>
                                                         <input type='hidden' name='user_id' value='{$user['user_id']}'>
                                                         <input type='hidden' name='new_status' value='" . ($user['status'] == 'active' ? 'inactive' : 'active') . "'>
@@ -165,9 +165,42 @@ if (isset($_POST['toggle_status'])) {
                                                 </div>
                                             </td>
                                         </tr>";
+
+                                    // Detail Modal for each user
+                                    echo "<div class='modal fade' id='detailModal{$user['user_id']}' tabindex='-1'>
+                                            <div class='modal-dialog modal-lg'>
+                                                <div class='modal-content'>
+                                                    <div class='modal-header'>
+                                                        <h5 class='modal-title'>Detail Penghuni</h5>
+                                                        <button type='button' class='btn-close' data-bs-dismiss='modal'></button>
+                                                    </div>
+                                                    <div class='modal-body'>
+                                                        <div class='row'>
+                                                            <div class='col-md-4'>
+                                                                <img src='" . ($user['profile_photo'] ? "../uploads/profiles/{$user['profile_photo']}" : "../Image/default-profile.png") . "' 
+                                                                     class='img-fluid rounded' alt='Profile Photo'>
+                                                            </div>
+                                                            <div class='col-md-8'>
+                                                                <table class='table'>
+                                                                    <tr><th>NIK</th><td>{$user['nik']}</td></tr>
+                                                                    <tr><th>Nama Lengkap</th><td>{$user['full_name']}</td></tr>
+                                                                    <tr><th>Email</th><td>{$user['email']}</td></tr>
+                                                                    <tr><th>No. Telepon</th><td>{$user['phone_number']}</td></tr>
+                                                                    <tr><th>Gender</th><td>" . ($user['gender'] == 'L' ? 'Laki-laki' : 'Perempuan') . "</td></tr>
+                                                                    <tr><th>Alamat</th><td>{$user['address']}</td></tr>
+                                                                    <tr><th>Kontak Darurat</th><td>{$user['emergency_contact']}</td></tr>
+                                                                    <tr><th>Pekerjaan</th><td>{$user['occupation']}</td></tr>
+                                                                    <tr><th>Terdaftar</th><td>" . date('d/m/Y H:i', strtotime($user['created_at'])) . "</td></tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>";
                                 }
                             } catch(PDOException $e) {
-                                echo "<tr><td colspan='8' class='text-center text-danger'>Error: " . $e->getMessage() . "</td></tr>";
+                                echo "<tr><td colspan='10' class='text-center text-danger'>Error: " . $e->getMessage() . "</td></tr>";
                             }
                             ?>
                         </tbody>
