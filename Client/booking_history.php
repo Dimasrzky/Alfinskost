@@ -8,10 +8,9 @@ if (!isLoggedIn()) {
 }
 
 // Get user's booking history
-$stmt = $pdo->prepare("SELECT b.*, r.room_number, p.payment_status 
+$stmt = $pdo->prepare("SELECT b.*, r.room_number, b.payment_status 
                        FROM bookings b 
                        JOIN rooms r ON b.room_id = r.room_id 
-                       LEFT JOIN payments p ON b.booking_id = p.booking_id 
                        WHERE b.user_id = ?
                        ORDER BY b.booking_date DESC");
 $stmt->execute([$_SESSION['user_id']]);
@@ -70,7 +69,7 @@ $bookings = $stmt->fetchAll();
                                         <?php echo $booking['booking_status'] == 'confirmed' ? 'Disetujui' : 'Pending'; ?>
                                     </span>
                                 </td>
-                                
+
                                 <!-- Status Pembayaran -->
                                 <td>
                                     <?php 
