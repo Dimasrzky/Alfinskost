@@ -44,12 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $filename,
                 $_POST['notes'] ?? null
             ]);
-
-            // Update booking payment status
-            $stmt = $pdo->prepare("UPDATE bookings SET payment_status = 'pending' WHERE booking_id = ?");
-            $stmt->execute([$booking_id]);
-
-            header("Location: booking_history.php?success=payment_uploaded");
             exit;
         }
     } catch(PDOException $e) {
