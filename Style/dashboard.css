@@ -237,6 +237,70 @@ button[type="submit"]:hover {
     background-color: #2980b9;
 }
 
+.review-section {
+    padding: 2rem 0;
+}
+
+.review-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    background-color: #fff;
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.user-icon {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+.user-name {
+    font-weight: bold;
+    margin-right: 1rem;
+}
+
+.rating-display {
+    color: #ffc107;
+}
+
+.review-content {
+    margin: 1rem 0;
+    line-height: 1.5;
+}
+
+.review-footer {
+    color: #6c757d;
+    font-size: 0.875rem;
+}
+
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label {
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #ddd;
+    margin: 0 2px;
+}
+
+.rating input:checked ~ label,
+.rating label:hover,
+.rating label:hover ~ label {
+    color: #ffc107;
+}
+
 footer {
     background-color: #59581d;
     color: #ecf0f1;
