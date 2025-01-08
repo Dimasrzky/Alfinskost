@@ -275,7 +275,7 @@ if (!isLoggedIn()) {
 
                         <!-- Reviews Display Column -->
                         <div class="col-md-6">
-                            <h2>Ulasan Orang</h2>
+                            <h2>Ulasan Pengguna</h2>
                             <div class="reviews-container">
                                 <?php
                                 $stmt = $pdo->query("SELECT * FROM reviews ORDER BY created_at DESC");
