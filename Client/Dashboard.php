@@ -239,12 +239,25 @@ if (!isLoggedIn()) {
 
                                 <div class="form-group mb-3">
                                     <label>Rating:</label>
-                                    <div class="rating-container">
-                                        <div class="rating">
-                                            <?php for($i = 5; $i >= 1; $i--): ?>
-                                            <input type="radio" id="star<?php echo $i; ?>" name="rating" value="<?php echo $i; ?>" required>
-                                            <label for="star<?php echo $i; ?>"></label>
-                                            <?php endfor; ?>
+                                    <div class="star-rating">
+                                        <div class="star-input">
+                                            <input type="radio" id="star5" name="rating" value="5" required/>
+                                            <label for="star5" title="5 stars">★</label>
+                                            
+                                            <input type="radio" id="star4" name="rating" value="4" required/>
+                                            <label for="star4" title="4 stars">★</label>
+                                            
+                                            <input type="radio" id="star3" name="rating" value="3" required/>
+                                            <label for="star3" title="3 stars">★</label>
+                                            
+                                            <input type="radio" id="star2" name="rating" value="2" required/>
+                                            <label for="star2" title="2 stars">★</label>
+                                            
+                                            <input type="radio" id="star1" name="rating" value="1" required/>
+                                            <label for="star1" title="1 star">★</label>
+                                        </div>
+                                        <div class="rating-value">
+                                            <span id="ratingValue">0</span> dari 5
                                         </div>
                                     </div>
                                 </div>
