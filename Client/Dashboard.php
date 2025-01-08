@@ -239,16 +239,28 @@ if (!isLoggedIn()) {
 
                                 <div class="form-group mb-3">
                                     <label class="d-block mb-2">Rating:</label>
-                                    <div class="rating-container">
-                                        <input type="hidden" name="rating" id="ratingInput" value="">
-                                        <div class="rating">
-                                            <i class='bx bx-star star' style="--i: 0;"></i>
-                                            <i class='bx bx-star star' style="--i: 1;"></i>
-                                            <i class='bx bx-star star' style="--i: 2;"></i>
-                                            <i class='bx bx-star star' style="--i: 3;"></i>
-                                            <i class='bx bx-star star' style="--i: 4;"></i>
-                                        </div>
-                                    </div>
+                                    <form class="rating">
+                                        <label>
+                                            <input type="radio" name="stars" value="1" />
+                                            <span class="icon">★</span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="stars" value="2" />
+                                            <span class="icon">★</span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="stars" value="3" />
+                                            <span class="icon">★</span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="stars" value="4" />
+                                            <span class="icon">★</span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="stars" value="5" />
+                                            <span class="icon">★</span>
+                                        </label>
+                                    </form>
                                 </div>
 
                                 <div class="form-group mb-3">

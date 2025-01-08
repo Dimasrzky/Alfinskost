@@ -237,72 +237,70 @@ button[type="submit"]:hover {
     background-color: #2980b9;
 }
 
-.review-section {
-    padding: 2rem 0;
-}
-
-.review-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 1rem;
-    background-color: #fff;
-}
-
-.review-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0.5rem;
-}
-
-.user-icon {
-    font-size: 1.5rem;
-    margin-right: 0.5rem;
-}
-
-.user-name {
-    font-weight: bold;
-    margin-right: 1rem;
-}
-
-.rating-display {
-    color: #ffc107;
-}
-
-.review-content {
-    margin: 1rem 0;
-    line-height: 1.5;
-}
-
-.review-footer {
-    color: #6c757d;
-    font-size: 0.875rem;
-}
-
-.rating-container {
-    text-align: left;
-    margin-bottom: 1rem;
-}
-
 .rating {
-    display: inline-flex;
-    flex-direction: row-reverse;
-    gap: 5px;
+    display: inline-block;
+    position: relative;
+    height: 50px;
+    line-height: 50px;
+    font-size: 50px;
 }
 
-.rating .star {
-    font-size: 32px;
+.rating label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
     cursor: pointer;
-    color: #ddd;
-    transition: color 0.2s ease;
 }
 
-.rating .star.active,
-.rating .star.hovered {
-    color: #FFD700;
+.rating label:last-child {
+    position: static;
 }
 
-.bxs-star {
-    color: #FFD700;
+.rating label:nth-child(1) {
+    z-index: 5;
+}
+
+.rating label:nth-child(2) {
+    z-index: 4;
+}
+
+.rating label:nth-child(3) {
+    z-index: 3;
+}
+
+.rating label:nth-child(4) {
+    z-index: 2;
+}
+
+.rating label:nth-child(5) {
+    z-index: 1;
+}
+
+.rating label input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+.rating label .icon {
+    float: left;
+    color: transparent;
+}
+
+.rating label:last-child .icon {
+    color: #000;
+}
+
+.rating:not(:hover) label input:checked ~ .icon,
+.rating:hover label:hover input ~ .icon {
+    color: #ffd700;
+}
+
+.rating label input:focus:not(:checked) ~ .icon:last-child {
+    color: #000;
+    text-shadow: 0 0 5px #ffd700;
 }
 
 footer {
