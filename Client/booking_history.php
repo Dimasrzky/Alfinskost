@@ -8,10 +8,10 @@ if (!isLoggedIn()) {
 }
 
 // Get user's booking history
-$stmt = $pdo->prepare("SELECT b.*, r.room_number, p.payment_status
-                       FROM bookings b
-                       JOIN rooms r ON b.room_id = r.room_id
-                       LEFT JOIN payments p ON b.booking_id = p.booking_id
+$stmt = $pdo->prepare("SELECT b.*, r.room_number, p.payment_status 
+                       FROM bookings b 
+                       JOIN rooms r ON b.room_id = r.room_id 
+                       LEFT JOIN payments p ON b.booking_id = p.booking_id 
                        WHERE b.user_id = ?
                        ORDER BY b.booking_date DESC");
 $stmt->execute([$_SESSION['user_id']]);
@@ -93,19 +93,26 @@ $bookings = $stmt->fetchAll();
                                     </span>
                                 </td>
 
+                                <!-- Kolom Aksi -->
                                 <td>
                                     <?php
                                     if($booking['booking_status'] == 'pending') {
+                                        // Jika booking masih pending
                                         echo '<span class="badge bg-warning">Menunggu Verifikasi Admin</span>';
                                     } elseif($booking['booking_status'] == 'confirmed') {
+                                        // Jika booking sudah disetujui
                                         if($booking['payment_status'] == 'unpaid') {
+                                            // Jika belum bayar, tampilkan tombol bayar
                                             echo '<a href="payment.php?id='.$booking['booking_id'].'" class="btn btn-primary btn-sm">Bayar Sekarang</a>';
                                         } elseif($booking['payment_status'] == 'pending') {
+                                            // Jika sudah bayar tapi menunggu verifikasi
                                             echo '<span class="badge bg-info">Menunggu Verifikasi Pembayaran</span>';
                                         } elseif($booking['payment_status'] == 'paid') {
+                                            // Jika sudah lunas
                                             echo '<span class="badge bg-success"><i class="bi bi-check-circle"></i> Selesai</span>';
                                         }
                                     } elseif($booking['booking_status'] == 'cancelled') {
+                                        // Jika booking dibatalkan
                                         echo '<span class="badge bg-danger">Dibatalkan</span>';
                                     }
                                     ?>
