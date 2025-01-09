@@ -103,11 +103,15 @@ $bookings = $pdo->query($query)->fetchAll();
                                                     <a href="process_booking.php?action=reject&id=<?php echo $booking['booking_id']; ?>" 
                                                     class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menolak pesanan ini?')">Tolak</a>
                                                 </div>
-                                            <?php elseif($booking['booking_status'] == 'confirmed'): ?>
-                                                <?php if($booking['payment_status'] == 'pending'): ?>
-                                                    <a href="verify_payment.php?id=<?php echo $booking['booking_id']; ?>" 
-                                                    class="btn btn-success btn-sm">Verifikasi Pembayaran</a>
-                                                <?php endif; ?>
+                                            <?php 
+                                                if($booking['booking_status'] == 'confirmed') {
+                                                if($booking['payment_status'] == 'pending') {
+                                                    echo '<a href="verify_payment.php?id='.$booking['booking_id'].'" 
+                                                    class="btn btn-success btn-sm">Verifikasi Pembayaran</a>';
+                                                } elseif($booking['payment_status'] == 'paid') {
+                                                    echo '<span class="badge bg-success">Pembayaran Terverifikasi</span>';
+                                                }
+                                            }?>
                                             <?php endif; ?>
                                             <a href="booking_detail.php?id=<?php echo $booking['booking_id']; ?>" 
                                             class="btn btn-info btn-sm text-white">Detail</a>
