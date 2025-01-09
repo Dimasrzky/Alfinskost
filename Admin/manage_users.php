@@ -185,7 +185,7 @@ if (!empty($search)) {
                                         (SELECT COUNT(*) FROM bookings WHERE user_id = u.user_id) as total_bookings,
                                         (SELECT COUNT(*) FROM reviews WHERE user_id = u.user_id) as total_reviews
                                         FROM users u 
-                                        WHERE u.role = 'user' 
+                                        WHERE 1=1 
                                         $searchCondition
                                         ORDER BY u.created_at DESC";
                                 
