@@ -104,8 +104,10 @@ $bookings = $stmt->fetchAll();
                                                 echo '<span class="badge bg-info">Menunggu Verifikasi Admin</span>';
                                                 break;
                                             case 'unpaid':
-                                            default:
                                                 echo '<a href="payment.php?id='.$booking['booking_id'].'" class="btn btn-primary btn-sm">Bayar Sekarang</a>';
+                                                break;
+                                            default:
+                                                echo '<span class="badge bg-warning">Status Pembayaran Tidak Valid</span>';
                                         }
                                     }
                                     ?>
