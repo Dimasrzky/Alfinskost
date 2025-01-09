@@ -238,14 +238,24 @@ button[type="submit"]:hover {
 }
 
 .rating {
-    display: inline-block;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     position: relative;
     height: 50px;
     line-height: 50px;
     font-size: 50px;
+    gap: 0.5rem;
 }
 
 .rating label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 0.3rem 0.5rem; /* Sesuaikan padding */
+    border: 1px solid #ddd; /* Tambahkan border */
+    border-radius: 4px; /* Tambahkan sudut melengkung */
+    transition: all 0.2s ease;
     position: absolute;
     top: 0;
     left: 0;
@@ -301,6 +311,17 @@ button[type="submit"]:hover {
 .rating label input:focus:not(:checked) ~ .icon:last-child {
     color: #000;
     text-shadow: 0 0 5px #ffd700;
+}
+
+.rating input[type="radio"] {
+    display: none; /* Sembunyikan input radio */
+}
+
+.rating label:hover,
+.rating input[type="radio"]:checked + label {
+    background-color: #007bff; /* Warna saat hover atau dipilih */
+    color: #fff; /* Warna teks saat dipilih */
+    border-color: #007bff;
 }
 
 footer {
