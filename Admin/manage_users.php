@@ -132,41 +132,11 @@ $baseQuery = "SELECT u.*,
     <title>Manage Users - Admin Panel</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-    <style>
-        .table-responsive { overflow-x: auto; }
-        .action-buttons { 
-            display: flex;
-            gap: 0.5rem;
-            justify-content: flex-end;
-        }
-        .search-box { max-width: 300px; }
-        .modal-table td {
-            padding: 8px;
-            border-bottom: 1px solid #dee2e6;
-        }
-        .modal-table th {
-            width: 35%;
-            font-weight: bold;
-            padding: 8px;
-            border-bottom: 1px solid #dee2e6;
-        }
-        .stats-card {
-            background: #fff;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-    </style>
+    <link href="../Style/manage_user.css" rel="stylesheet">
+    <link rel="icon" type="png" href="../Image/Logo Alfins Kost.png">
 </head>
 <body class="bg-light">
     <?php include 'Admin_header.php'; ?>
-
-    <div class="mb-3">
-            <a href="Admin_Dashboard.php" class="btn btn-secondary">
-                <i class="bi bi-arrow-left"></i> Kembali
-            </a>
-        </div>
 
     <div class="container my-4">
         <!-- Alert Messages -->
@@ -178,6 +148,12 @@ $baseQuery = "SELECT u.*,
                 </div>
             <?php endif; ?>
         <?php endforeach; ?>
+
+        <div class="mb-3">
+            <a href="Admin_Dashboard.php" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Kembali
+            </a>
+        </div>
 
         <!-- Search Form -->
         <div class="row mb-4">
