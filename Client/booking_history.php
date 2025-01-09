@@ -96,24 +96,13 @@ $bookings = $stmt->fetchAll();
                                 <td>
                                     <?php
                                     if($booking['booking_status'] === 'confirmed') {
-                                        // Cek status pembayaran dari database
-                                        switch($booking['payment_status']) {
-                                            case 'paid':
-                                                echo '<span class="badge bg-success"><i class="bi bi-check-circle"></i> Selesai</span>';
-                                                break;
-                                            case 'pending':
-                                                echo '<span class="badge bg-info">Menunggu Verifikasi Admin</span>';
-                                                break;
-                                            case 'unpaid':
-                                                echo '<a href="payment.php?id='.$booking['booking_id'].'" class="btn btn-primary btn-sm">Bayar Sekarang</a>';
-                                                break;
-                                            default:
-                                                echo '<a href="payment.php?id='.$booking['booking_id'].'" class="btn btn-primary btn-sm">Bayar Sekarang</a>';
+                                        if($booking['payment_status'] === 'paid') {
+                                            echo '<span class="badge bg-success"><i class="bi bi-check-circle"></i> Selesai</span>';
+                                        } elseif($booking['payment_status'] === 'pending') {
+                                            echo '<span class="badge bg-info">Menunggu Verifikasi Admin</span>';
+                                        } elseif($booking['payment_status'] === 'unpaid') {
+                                            echo '<a href="payment.php?id='.$booking['booking_id'].'" class="btn btn-primary btn-sm">Bayar Sekarang</a>';
                                         }
-                                    } elseif($booking['booking_status'] === 'pending') {
-                                        echo '<span class="badge bg-warning">Menunggu Verifikasi Admin</span>';
-                                    } elseif($booking['booking_status'] === 'cancelled') {
-                                        echo '<span class="badge bg-danger">Dibatalkan</span>';
                                     }
                                     ?>
                                 </td>
