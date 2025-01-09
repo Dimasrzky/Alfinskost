@@ -392,8 +392,8 @@ footer {
         display: flex;
     }
 
-    .burger-menu, span {
-        color: #ffffff;
+    .burger-menu span {
+        background-color: #ffffff;
     }
 
     /* Show Navigation When Active */
