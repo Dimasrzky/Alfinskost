@@ -211,7 +211,7 @@ if (!isLoggedIn()) {
                         <!-- Review Form Column -->
                         <div class="col-md-6">
                             <h2>Beri Ulasan</h2>
-                            <form action="process_review.php" method="post">
+                            <form action="process_review.php" method="post" novalidate>
                                 <div class="form-group mb-3">
                                     <label for="nama">Nama:</label>
                                     <input type="text" id="nama" name="nama" class="form-control" 
@@ -220,36 +220,39 @@ if (!isLoggedIn()) {
 
                                 <div class="form-group mb-3">
                                     <label>Gender:</label>
-                                    <div class="gender-options">
-                                        <div class="gender-option">
-                                            <input type="radio" id="laki-laki" name="gender" value="L" required>
-                                            <label for="laki-laki">Laki-laki</label>
-                                        </div>
-                                        <div class="gender-option">
-                                            <input type="radio" id="perempuan" name="gender" value="P" required>
-                                            <label for="perempuan">Perempuan</label>
-                                        </div>
+                                    <div class="form-check">
+                                        <input type="radio" id="laki-laki" name="gender" value="L" class="form-check-input" required>
+                                        <label for="laki-laki" class="form-check-label">Laki-laki</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="radio" id="perempuan" name="gender" value="P" class="form-check-input" required>
+                                        <label for="perempuan" class="form-check-label">Perempuan</label>
                                     </div>
                                 </div>
 
                                 <div class="form-group mb-3">
                                     <label for="nomorhp">Nomor HP:</label>
-                                    <input type="tel" id="nomorhp" name="nomorhp" class="form-control" required>
+                                    <input type="tel" id="nomorhp" name="nomorhp" class="form-control" pattern="[0-9]{10,13}" 
+                                        placeholder="Contoh: 081234567890" required>
                                 </div>
 
                                 <div class="form-group mb-3">
                                     <label>Rating:</label>
-                                    <div class="rating">
+                                    <div class="rating d-flex gap-2">
                                         <?php for($i = 5; $i >= 1; $i--): ?>
-                                        <input type="radio" id="star<?php echo $i; ?>" name="rating" value="<?php echo $i; ?>" required>
-                                        <label for="star<?php echo $i; ?>"></label>
+                                        <div class="form-check">
+                                            <input type="radio" id="star<?php echo $i; ?>" name="rating" value="<?php echo $i; ?>" 
+                                                class="form-check-input" required>
+                                            <label for="star<?php echo $i; ?>" class="form-check-label"><?php echo $i; ?> Star</label>
+                                        </div>
                                         <?php endfor; ?>
                                     </div>
                                 </div>
 
                                 <div class="form-group mb-3">
                                     <label for="ulasan">Ulasan:</label>
-                                    <textarea id="ulasan" name="ulasan" class="form-control" rows="4" required></textarea>
+                                    <textarea id="ulasan" name="ulasan" class="form-control" rows="4" 
+                                            placeholder="Tulis ulasan Anda di sini..." required></textarea>
                                 </div>
 
                                 <div class="form-group">
@@ -264,28 +267,29 @@ if (!isLoggedIn()) {
                             <div class="reviews-container">
                                 <?php
                                 $stmt = $pdo->query("SELECT * FROM reviews ORDER BY created_at DESC");
-                                while($review = $stmt->fetch()) {
-                                    $genderIcon = $review['gender'] === 'L' ? '👨' : '👩';
-                                    $ratingStars = str_repeat('⭐', $review['rating']);
+                                if ($stmt->rowCount() > 0):
+                                    while($review = $stmt->fetch()):
+                                        $genderIcon = $review['gender'] === 'L' ? '👨' : '👩';
+                                        $ratingStars = str_repeat('⭐', $review['rating']);
                                 ?>
-                                <div class="review-card mb-3">
-                                    <div class="review-header">
-                                        <span class="user-icon"><?php echo $genderIcon; ?></span>
-                                        <span class="user-name"><?php echo htmlspecialchars($review['full_name']); ?></span>
-                                        <div class="rating-display"><?php echo $ratingStars; ?></div>
+                                <div class="review-card mb-3 p-3 border rounded bg-white">
+                                    <div class="review-header d-flex justify-content-between align-items-center">
+                                        <span class="user-icon fs-4"><?php echo $genderIcon; ?></span>
+                                        <span class="user-name fw-bold"><?php echo htmlspecialchars($review['full_name']); ?></span>
+                                        <div class="rating-display text-warning"><?php echo $ratingStars; ?></div>
                                     </div>
-                                    <div class="review-content">
-                                        <?php echo nl2br(htmlspecialchars($review['review_text'])); ?>
+                                    <div class="review-content mt-2">
+                                        <p><?php echo nl2br(htmlspecialchars($review['review_text'])); ?></p>
                                     </div>
-                                    <div class="review-footer">
+                                    <div class="review-footer text-end">
                                         <small class="text-muted">
                                             <?php echo date('d M Y H:i', strtotime($review['created_at'])); ?>
                                         </small>
                                     </div>
                                 </div>
-                                <?php
-                                }
-                                ?>
+                                <?php endwhile; else: ?>
+                                <p class="text-muted">Belum ada ulasan. Jadilah yang pertama memberikan ulasan!</p>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
