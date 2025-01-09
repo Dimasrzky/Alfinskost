@@ -176,19 +176,18 @@ if (!empty($search)) {
                             <?php
                             try {
                                 $query = "SELECT u.*, 
-                                         (SELECT r.room_number 
-                                          FROM bookings b 
-                                          JOIN rooms r ON b.room_id = r.room_id 
-                                          WHERE b.user_id = u.user_id 
-                                          AND b.booking_status = 'confirmed' 
-                                          ORDER BY b.created_at DESC 
-                                          LIMIT 1) as current_room,
-                                         (SELECT COUNT(*) FROM bookings WHERE user_id = u.user_id) as total_bookings,
-                                         (SELECT COUNT(*) FROM reviews WHERE user_id = u.user_id) as total_reviews
-                                         FROM users u 
-                                         WHERE u.role = 'user' 
-                                         $searchCondition
-                                         ORDER BY u.created_at DESC";
+                                        (SELECT r.room_number 
+                                        FROM bookings b 
+                                        JOIN rooms r ON b.room_id = r.room_id 
+                                        WHERE b.user_id = u.user_id 
+                                        AND b.booking_status = 'confirmed' 
+                                        LIMIT 1) as current_room,
+                                        (SELECT COUNT(*) FROM bookings WHERE user_id = u.user_id) as total_bookings,
+                                        (SELECT COUNT(*) FROM reviews WHERE user_id = u.user_id) as total_reviews
+                                        FROM users u 
+                                        WHERE u.role = 'user' 
+                                        $searchCondition
+                                        ORDER BY u.created_at DESC";
                                 
                                 $stmt = $pdo->prepare($query);
                                 if (!empty($searchParams)) {
