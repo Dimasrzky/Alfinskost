@@ -342,5 +342,16 @@ if (!isLoggedIn()) {
             availabilityFilter.addEventListener('change', filterRooms);
         });
    </script>
+   <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const burgerMenu = document.getElementById("burger-menu");
+        const navbar = document.getElementById("navbar");
+
+        burgerMenu.addEventListener("click", function () {
+            burgerMenu.classList.toggle("active");
+            navbar.classList.toggle("active");
+        });
+    });
+    </script>   
 </body>
 </html>
