@@ -249,14 +249,6 @@ button[type="submit"]:hover {
 }
 
 .rating label {
-    font-size: 0.9rem;
-    font-weight: bold;
-    text-align: center;
-    padding: 0.3rem 0.5rem; /* Sesuaikan padding */
-    border: 1px solid #ddd; /* Tambahkan border */
-    border-radius: 4px; /* Tambahkan sudut melengkung */
-    transition: all 0.2s ease;
-    position: absolute;
     top: 0;
     left: 0;
     cursor: pointer;
