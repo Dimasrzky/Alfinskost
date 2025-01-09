@@ -96,6 +96,7 @@ $bookings = $stmt->fetchAll();
                                 <td>
                                     <?php
                                     if($booking['booking_status'] === 'confirmed') {
+                                        // Perbaikan logika status pembayaran
                                         switch($booking['payment_status']) {
                                             case 'paid':
                                                 echo '<span class="badge bg-success"><i class="bi bi-check-circle"></i> Selesai</span>';
@@ -104,11 +105,14 @@ $bookings = $stmt->fetchAll();
                                                 echo '<span class="badge bg-info">Menunggu Verifikasi Admin</span>';
                                                 break;
                                             case 'unpaid':
+                                            case '': // Tambahan untuk handle empty status
                                                 echo '<a href="payment.php?id='.$booking['booking_id'].'" class="btn btn-primary btn-sm">Bayar Sekarang</a>';
                                                 break;
                                             default:
-                                                echo '<span class="badge bg-warning">Status Pembayaran Tidak Valid</span>';
+                                                echo '<span class="badge bg-warning">Status Tidak Valid</span>';
                                         }
+                                    } elseif($booking['booking_status'] === 'pending') {
+                                        echo '<span class="badge bg-warning">Menunggu Konfirmasi Admin</span>';
                                     }
                                     ?>
                                 </td>
