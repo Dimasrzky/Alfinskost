@@ -23,7 +23,21 @@ if (!$booking) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Pertama, periksa apakah booking ini sudah memiliki pembayaran pending
+    $check_payment = $pdo->prepare("SELECT payment_status FROM bookings WHERE booking_id = ?");
+    $check_payment->execute([$booking_id]);
+    $current_status = $check_payment->fetch()['payment_status'];
+
+    // Jika sudah ada pembayaran pending atau paid, redirect
+    if ($current_status == 'pending' || $current_status == 'paid') {
+        header("Location: booking_history.php?error=already_paid");
+        exit;
+    }
+
     try {
+        // Mulai transaksi database
+        $pdo->beginTransaction();
+
         if (isset($_FILES['payment_proof']) && $_FILES['payment_proof']['error'] == 0) {
             $upload_dir = '../uploads/payments/';
             if (!file_exists($upload_dir)) {
@@ -35,8 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Insert into payments table
             $stmt = $pdo->prepare("INSERT INTO payments (booking_id, amount, payment_date, payment_method, 
-                                 payment_proof, payment_status, notes) 
-                                 VALUES (?, ?, NOW(), ?, ?, 'pending', ?)");
+                                payment_proof, payment_status, notes) 
+                                VALUES (?, ?, NOW(), ?, ?, 'pending', ?)");
             $stmt->execute([
                 $booking_id,
                 $booking['total_price'],
@@ -49,11 +63,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt = $pdo->prepare("UPDATE bookings SET payment_status = 'pending' WHERE booking_id = ?");
             $stmt->execute([$booking_id]);
 
+            // Commit transaksi
+            $pdo->commit();
+
+            $_SESSION['success_message'] = "Pembayaran berhasil diupload dan menunggu verifikasi admin";
             header("Location: booking_history.php?success=payment_uploaded");
             exit;
         }
     } catch(PDOException $e) {
+        // Rollback jika terjadi error
+        $pdo->rollBack();
         $error = $e->getMessage();
+        $_SESSION['error_message'] = "Terjadi kesalahan dalam proses pembayaran";
+        header("Location: payment.php?id=" . $booking_id . "&error=1");
+        exit;
     }
 }
 ?>
