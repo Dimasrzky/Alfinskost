@@ -162,6 +162,12 @@ $baseQuery = "SELECT u.*,
 <body class="bg-light">
     <?php include 'Admin_header.php'; ?>
 
+    <div class="mb-3">
+            <a href="Admin_Dashboard.php" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Kembali
+            </a>
+        </div>
+
     <div class="container my-4">
         <!-- Alert Messages -->
         <?php foreach (['success', 'error'] as $type): ?>
