@@ -127,7 +127,8 @@ $baseQuery = "SELECT u.*,
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self';">
+    <meta http-equiv="X-Content-Type-Security-Policy" content="default-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;">
     <title>Manage Users - Admin Panel</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
@@ -161,6 +162,12 @@ $baseQuery = "SELECT u.*,
 <body class="bg-light">
     <?php include 'Admin_header.php'; ?>
 
+    <div class="mb-3">
+            <a href="Admin_Dashboard.php" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Kembali
+            </a>
+        </div>
+
     <div class="container my-4">
         <!-- Alert Messages -->
         <?php foreach (['success', 'error'] as $type): ?>
@@ -191,140 +198,127 @@ $baseQuery = "SELECT u.*,
                 </form>
             </div>
         </div>
+                        <tbody>
+                            <?php
+                            try {
+                                $stmt = $pdo->prepare($baseQuery);
+                                $stmt->execute($searchParams);
 
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>NIK</th>
-                        <th>Full Name</th>
-                        <th>Email</th>
-                        <th>Phone Number</th>
-                        <th>Current Room</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    try {
-                        $stmt = $pdo->prepare($baseQuery);
-                        $stmt->execute($searchParams);
+                                while ($user = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                    ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($user['nik']) ?></td>
+                                        <td><?= htmlspecialchars($user['full_name']) ?></td>
+                                        <td><?= htmlspecialchars($user['email']) ?></td>
+                                        <td><?= htmlspecialchars($user['phone_number']) ?></td>
+                                        <td><?= $user['current_room'] ? "Room " . htmlspecialchars($user['current_room']) : "-" ?></td>
+                                        <td>
+                                            <span class="badge bg-<?= $user['status'] == 'active' ? 'success' : 'danger' ?>">
+                                                <?= ucfirst(htmlspecialchars($user['status'])) ?>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button type="button" class="btn btn-info btn-sm text-white" 
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#userModal<?= $user['user_id'] ?>">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>
+                                                <form method="POST" class="d-inline">
+                                                    <input type="hidden" name="user_id" value="<?= $user['user_id'] ?>">
+                                                    <input type="hidden" name="new_status" 
+                                                           value="<?= $user['status'] == 'active' ? 'inactive' : 'active' ?>">
+                                                    <button type="submit" name="toggle_status" class="btn btn-warning btn-sm">
+                                                        <i class="bi bi-toggle-<?= $user['status'] == 'active' ? 'on' : 'off' ?>"></i>
+                                                    </button>
+                                                </form>
+                                                <form method="POST" class="d-inline" name="delete_form">
+                                                    <input type="hidden" name="user_id" value="<?= $user['user_id'] ?>">
+                                                    <button type="submit" name="delete_user" class="btn btn-danger btn-sm">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
 
-                        while ($user = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                            ?>
-                            <tr>
-                                <td><?= htmlspecialchars($user['nik']) ?></td>
-                                <td><?= htmlspecialchars($user['full_name']) ?></td>
-                                <td><?= htmlspecialchars($user['email']) ?></td>
-                                <td><?= htmlspecialchars($user['phone_number']) ?></td>
-                                <td><?= $user['current_room'] ? "Room " . htmlspecialchars($user['current_room']) : "-" ?></td>
-                                <td>
-                                    <span class="badge bg-<?= $user['status'] == 'active' ? 'success' : 'danger' ?>">
-                                        <?= ucfirst(htmlspecialchars($user['status'])) ?>
-                                    </span>
-                                </td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button type="button" class="btn btn-info btn-sm text-white" 
-                                                data-bs-toggle="modal" 
-                                                data-bs-target="#userModal<?= $user['user_id'] ?>">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                        <form method="POST" class="d-inline">
-                                            <input type="hidden" name="user_id" value="<?= $user['user_id'] ?>">
-                                            <input type="hidden" name="new_status" 
-                                                   value="<?= $user['status'] == 'active' ? 'inactive' : 'active' ?>">
-                                            <button type="submit" name="toggle_status" class="btn btn-warning btn-sm">
-                                                <i class="bi bi-toggle-<?= $user['status'] == 'active' ? 'on' : 'off' ?>"></i>
-                                            </button>
-                                        </form>
-                                        <form method="POST" class="d-inline" name="delete_form">
-                                            <input type="hidden" name="user_id" value="<?= $user['user_id'] ?>">
-                                            <button type="submit" name="delete_user" class="btn btn-danger btn-sm">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-
-                                    <!-- User Detail Modal -->
-                                    <div class="modal fade" id="userModal<?= $user['user_id'] ?>" tabindex="-1">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">User Details</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="row mb-4">
-                                                        <div class="col-md-4">
-                                                            <div class="stats-card text-center">
-                                                                <h6>Total Bookings</h6>
-                                                                <h3><?= $user['total_bookings'] ?></h3>
-                                                            </div>
+                                            <!-- User Detail Modal -->
+                                            <div class="modal fade" id="userModal<?= $user['user_id'] ?>" tabindex="-1">
+                                                <div class="modal-dialog modal-lg">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">User Details</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                         </div>
-                                                        <div class="col-md-4">
-                                                            <div class="stats-card text-center">
-                                                                <h6>Reviews Given</h6>
-                                                                <h3><?= $user['total_reviews'] ?></h3>
+                                                        <div class="modal-body">
+                                                            <!-- User Stats -->
+                                                            <div class="row mb-4">
+                                                                <div class="col-md-4">
+                                                                    <div class="stats-card text-center">
+                                                                        <h6>Total Bookings</h6>
+                                                                        <h3><?= $user['total_bookings'] ?></h3>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="stats-card text-center">
+                                                                        <h6>Reviews Given</h6>
+                                                                        <h3><?= $user['total_reviews'] ?></h3>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="stats-card text-center">
+                                                                        <h6>Account Status</h6>
+                                                                        <h3>
+                                                                            <span class="badge bg-<?= $user['status'] == 'active' ? 'success' : 'danger' ?>">
+                                                                                <?= ucfirst(htmlspecialchars($user['status'])) ?>
+                                                                            </span>
+                                                                        </h3>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="stats-card text-center">
-                                                                <h6>Account Status</h6>
-                                                                <h3>
-                                                                    <span class="badge bg-<?= $user['status'] == 'active' ? 'success' : 'danger' ?>">
-                                                                        <?= ucfirst(htmlspecialchars($user['status'])) ?>
-                                                                    </span>
-                                                                </h3>
-                                                            </div>
+
+                                                            <!-- User Details Table -->
+                                                            <table class="modal-table w-100">
+                                                                <?php
+                                                                $details = [
+                                                                    'NIK' => 'nik',
+                                                                    'Full Name' => 'full_name',
+                                                                    'Email' => 'email',
+                                                                    'Phone Number' => 'phone_number',
+                                                                    'Gender' => ['field' => 'gender', 'transform' => function($v) { return $v == 'L' ? 'Male' : 'Female'; }],
+                                                                    'Address' => 'address',
+                                                                    'Emergency Contact' => 'emergency_contact',
+                                                                    'Occupation' => 'occupation',
+                                                                    'Current Room' => ['field' => 'current_room', 'transform' => function($v) { return $v ? "Room $v" : "Not assigned"; }],
+                                                                    'Registered Date' => ['field' => 'created_at', 'transform' => function($v) { return date('d/m/Y H:i', strtotime($v)); }],
+                                                                    'Last Updated' => ['field' => 'updated_at', 'transform' => function($v) { return date('d/m/Y H:i', strtotime($v)); }]
+                                                                ];
+
+                                                                foreach ($details as $label => $field) {
+                                                                    $value = is_array($field) 
+                                                                        ? $field['transform']($user[$field['field']] ?? '-')
+                                                                        : ($user[$field] ?? '-');
+                                                                    ?>
+                                                                    <tr>
+                                                                        <th><?= htmlspecialchars($label) ?></th>
+                                                                        <td><?= htmlspecialchars($value) ?></td>
+                                                                    </tr>
+                                                                    <?php
+                                                                }
+                                                                ?>
+                                                            </table>
                                                         </div>
                                                     </div>
-                                                    <table class="modal-table w-100">
-                                                        <?php
-                                                        $details = [
-                                                            'NIK' => 'nik',
-                                                            'Full Name' => 'full_name',
-                                                            'Email' => 'email',
-                                                            'Phone Number' => 'phone_number',
-                                                            'Gender' => ['field' => 'gender', 'transform' => function($v) { return $v == 'L' ? 'Male' : 'Female'; }],
-                                                            'Address' => 'address',
-                                                            'Emergency Contact' => 'emergency_contact',
-                                                            'Occupation' => 'occupation',
-                                                            'Current Room' => ['field' => 'current_room', 'transform' => function($v) { return $v ? "Room $v" : "Not assigned"; }],
-                                                            'Registered Date' => ['field' => 'created_at', 'transform' => function($v) { return date('d/m/Y H:i', strtotime($v)); }],
-                                                            'Last Updated' => ['field' => 'updated_at', 'transform' => function($v) { return date('d/m/Y H:i', strtotime($v)); }]
-                                                        ];
-
-                                                        foreach ($details as $label => $field) {
-                                                            $value = is_array($field) 
-                                                                ? $field['transform']($user[$field['field']] ?? '-')
-                                                                : ($user[$field] ?? '-');
-                                                            ?>
-                                                            <tr>
-                                                                <th><?= htmlspecialchars($label) ?></th>
-                                                                <td><?= htmlspecialchars($value) ?></td>
-                                                            </tr>
-                                                            <?php
-                                                        }
-                                                        ?>
-                                                    </table>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <?php
-                        }
-                    } catch (PDOException $e) {
-                        error_log("Database error: " . $e->getMessage());
-                        echo "<tr><td colspan='7' class='text-center text-danger'>An error occurred while fetching users. Please try again later.</td></tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
-        </div>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                }
+                            } catch(PDOException $e) {
+                                error_log("Database error: " . $e->getMessage());
+                                echo "<tr><td colspan='7' class='text-center text-danger'>An error occurred while fetching users. Please try again later.</td></tr>";
+                            }
+                            ?>
+                        </tbody>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
