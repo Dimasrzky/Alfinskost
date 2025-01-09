@@ -12,6 +12,9 @@ body {
 }
 
 header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: #000000;
     color: #ecf0f1;
     padding: 10px 20px;
@@ -48,13 +51,13 @@ header {
 }
 
 .header-logo h1 {
-    margin: 0;
-    font-size: 35px;
-    color: white;
+    margin-left: 10px;
+    font-size: 1.5rem;
+    color: #333;
 }
 
 nav {
-    width: auto;
+    display: flex;
 }
 
 nav ul {
@@ -63,6 +66,7 @@ nav ul {
     justify-content: flex-end;
     margin-top: 20px;
     font-size: 20px;
+    gap: 15px;
 }
 
 nav ul li {
@@ -79,6 +83,24 @@ nav ul li a {
 nav ul li a:hover {
     color: #9d9b2f;
 }
+
+.burger-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.burger-menu span {
+    display: block;
+    height: 3px;
+    background-color: #333;
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
+}
+
 
 /* Modifikasi style untuk profile-image di dashboard.css */
 .profile-image {
@@ -347,5 +369,47 @@ footer {
 
     .image-gallery {
         background-color: #353535;
+    }
+
+    nav {
+        display: none;
+        flex-direction: column;
+        background-color: #fff;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 100%;
+        padding: 10px 0;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul li {
+        margin: 10px 0;
+    }
+
+    .burger-menu {
+        display: flex;
+    }
+
+    /* Show Navigation When Active */
+    nav.active {
+        display: flex;
+    }
+
+    .burger-menu.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .burger-menu.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .burger-menu.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
     }
 }

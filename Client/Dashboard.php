@@ -24,7 +24,12 @@ if (!isLoggedIn()) {
                 <img src="../Image/Logo Alfins Kost.png" alt="Logo" class="site-logo">
                 <h1>Alfins Kost</h1>
             </div>
-            <nav>
+            <div class="burger-menu" id="burger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav id="navbar">
                 <ul>
                     <li><a href="#beranda">Beranda</a></li>
                     <li><a href="#lokasi">Lokasi</a></li>
@@ -36,7 +41,6 @@ if (!isLoggedIn()) {
             </nav>
         </div>
     </header>
-
     <main>
         <div class="main-content">
             <!-- Profile Section -->
