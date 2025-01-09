@@ -390,6 +390,9 @@ footer {
 
     .burger-menu {
         display: flex;
+    }
+
+    span {
         color: #ffffff;
     }
 
