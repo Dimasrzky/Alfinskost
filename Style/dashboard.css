@@ -389,6 +389,10 @@ footer {
         margin: 10px 0;
     }
 
+    nav ul li a {
+        color: #000000;
+    }
+
     .burger-menu {
         display: flex;
     }
