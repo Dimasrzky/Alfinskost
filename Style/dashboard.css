@@ -320,7 +320,7 @@ footer {
     padding: 1.5rem 0;
 }
 
-@media screen and (min-width: 800px) and (max-width: 1500px) {
+@media screen and (min-width: 625px) and (max-width: 1500px) {
     body {
         background-color: #ddd;
     }
@@ -330,7 +330,7 @@ footer {
     }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 625px) {
     .container {
         display: block;
     }
