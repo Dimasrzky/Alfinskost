@@ -7,9 +7,15 @@ if (!isLoggedIn()) {
     exit;
 }
 
-// Di file payment.php atau proses pembayaran
-$stmt = $pdo->prepare("UPDATE bookings SET payment_status = 'pending' WHERE booking_id = ?");
-$stmt->execute([$booking_id]);
+// Get booking details
+$booking_id = $_GET['id'];
+$stmt = $pdo->prepare("SELECT b.*, r.room_number, rt.price_monthly 
+                       FROM bookings b
+                       JOIN rooms r ON b.room_id = r.room_id
+                       JOIN room_types rt ON r.type_id = rt.type_id
+                       WHERE b.booking_id = ? AND b.user_id = ?");
+$stmt->execute([$booking_id, $_SESSION['user_id']]);
+$booking = $stmt->fetch();
 
 if (!$booking) {
     header("Location: booking_history.php");
