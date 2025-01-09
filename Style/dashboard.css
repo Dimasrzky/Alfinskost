@@ -249,8 +249,6 @@ button[type="submit"]:hover {
 }
 
 .rating label {
-    top: 0;
-    left: 0;
     cursor: pointer;
 }
 
